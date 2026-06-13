@@ -84,7 +84,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 | 百度贴吧 | ddgksf2013 | Surge `.sgmodule` | 处理信息流、页面中部广告、热搜和部分个人页推广 |
 | 知乎 | ddgksf2013 整合，包含 blackmatrix7 等贡献 | Surge `.sgmodule` | 处理开屏、推荐信息流、热榜、搜索、回答页及部分弹窗 |
 | 微信小程序 | Kelee | Surge `.sgmodule` | 处理多个常用微信小程序的弹窗、Banner、信息流及活动推广 |
-| YouTube | ddgksf2013 | Surge `.sgmodule` | 处理部分贴片、瀑布流、搜索页和播放页广告，并包含部分 PIP/后台播放处理 |
+| YouTube Enhance | Maasea | Surge `.sgmodule`（本仓库固定默认参数后合并） | 适用于 YouTube 与 YouTube Music，处理广告、画中画、后台播放及部分界面按钮；脚本直接使用 Maasea 原仓库 |
 | 中国电信 | fmz200 | Surge `.sgmodule` | 处理欢迎页动画、开屏及部分广告域名 |
 
 说明：
@@ -139,7 +139,7 @@ GitHub Actions 每天北京时间约 11:17 执行以下流程：
 - 部分 App 会缓存开屏素材，规则已生效时仍可能暂时显示旧广告；清理缓存或重新安装后再测试。
 - 较深度规则可能同时隐藏活动入口、推荐卡片或其他非核心内容。
 - 微信小程序模块覆盖范围较广，如个别小程序功能异常，可先停用本模块排查。
-- YouTube 去广告依赖接口和客户端版本，稳定性通常低于普通开屏规则。
+- YouTube Enhance 来源于 Maasea。由于原模块使用 Surge 模块参数，本仓库合并时固定采用默认参数；YouTube 接口或客户端更新后仍可能暂时失效。
 - App 更新后接口可能变化，规则可能暂时失效。
 - 不建议将 HTTPS 解密范围扩大到不需要处理的敏感域名。
 - 本项目仅整理、转换和自动合并上游规则，不保证长期兼容，也不对第三方规则或脚本的安全性作担保。
@@ -169,6 +169,7 @@ GitHub Actions 每天北京时间约 11:17 执行以下流程：
 - Kelee；
 - blackmatrix7；
 - sooyaaabo；
-- fmz200。
+- fmz200；
+- Maasea。
 
 感谢各上游作者和贡献者的维护。本仓库仅作个人整理、格式转换与自动合并。
