@@ -47,6 +47,7 @@
       ],
       "hostnames": [
         "acs.m.goofish.com",
+        "g-acs.m.goofish.com",
         "iyes.youku.com"
       ]
     },
@@ -165,9 +166,195 @@
         "api.ahmobile.cn",
         "gd.10086.cn"
       ]
+    },
+    "铁路12306": {
+      "markers": [
+        "12306"
+      ],
+      "hostnames": [
+        "ad.12306.cn"
+      ]
+    },
+    "交管12123": {
+      "markers": [
+        "12123"
+      ],
+      "hostnames": [
+        "gab.122.gov.cn"
+      ]
+    },
+    "饿了么": {
+      "markers": [
+        "elema"
+      ],
+      "hostnames": [
+        "elemecdn.com",
+        "fuss10.elemecdn.com"
+      ]
+    },
+    "飞猪旅行": {
+      "markers": [
+        "feizhu"
+      ],
+      "hostnames": [
+        "acs.m.taobao.com"
+      ]
+    },
+    "贝壳找房": {
+      "markers": [
+        "beikezhaofang"
+      ],
+      "hostnames": [
+        "apps.api.ke.com"
+      ]
+    },
+    "大麦": {
+      "markers": [
+        "damai"
+      ],
+      "hostnames": [
+        "acs.m.taobao.com"
+      ]
+    },
+    "叮咚买菜": {
+      "markers": [
+        "dingdongmaicai"
+      ],
+      "hostnames": [
+        "maicai.api.ddxq.mobi"
+      ]
+    },
+    "盒马": {
+      "markers": [
+        "hema"
+      ],
+      "hostnames": [
+        "acs.m.taobao.com",
+        "acs-m.freshippo.com"
+      ]
+    },
+    "顺丰速运": {
+      "markers": [
+        "ShunFeng"
+      ],
+      "hostnames": [
+        "ccsp-egmas.sf-express.com",
+        "shopic.sf-express.com"
+      ]
+    },
+    "百度地图": {
+      "markers": [
+        "baiduditu"
+      ],
+      "hostnames": [
+        "newclient.map.baidu.com"
+      ]
+    },
+    "夸克": {
+      "markers": [
+        "kuake"
+      ],
+      "hostnames": [
+        "open-cms-api.uc.cn",
+        "open-cms-api.quark.cn"
+      ]
+    },
+    "淘票票": {
+      "markers": [
+        "TaoPiaoPiao"
+      ],
+      "hostnames": [
+        "acs.m.taobao.com"
+      ]
+    },
+    "猫眼": {
+      "markers": [
+        "maoyan"
+      ],
+      "hostnames": [
+        "p0.pipi.cn",
+        "vod.pipi.cn"
+      ]
+    },
+    "麦当劳": {
+      "markers": [
+        "maidanglao"
+      ],
+      "hostnames": [
+        "api.mcd.cn"
+      ]
+    },
+    "必胜客": {
+      "markers": [
+        "bishengke"
+      ],
+      "hostnames": [
+        "res.pizzahut.com.cn"
+      ]
+    },
+    "同程旅行": {
+      "markers": [
+        "tongchenglvxing"
+      ],
+      "hostnames": [
+        "tcmobileapi.17usoft.com"
+      ]
+    },
+    "腾讯新闻": {
+      "markers": [
+        "TencentNews"
+      ],
+      "hostnames": [
+        "r.inews.qq.com"
+      ]
+    },
+    "唯品会": {
+      "markers": [
+        "weipinhui"
+      ],
+      "hostnames": [
+        "mapi.appvipshop.com",
+        "b.appsimg.com"
+      ]
+    },
+    "网易严选": {
+      "markers": [
+        "WangYiYanXuan"
+      ],
+      "hostnames": [
+        "support.you.163.com",
+        "m.you.163.com",
+        "yanxuan.nosdn.127.net"
+      ]
+    },
+    "中国联通": {
+      "markers": [
+        "zhongguoliantong"
+      ],
+      "hostnames": [
+        "m.client.10010.com"
+      ]
+    },
+    "转转": {
+      "markers": [
+        "zhuanzhuan"
+      ],
+      "hostnames": [
+        "app.zhuanzhuan.com"
+      ]
     }
   },
   "external_modules": [
+    {
+      "name": "影视去广告",
+      "url": "https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/modules/FakeiOSAds.sgmodule",
+      "required": false
+    },
+    {
+      "name": "闲鱼增强",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/GoofishAds.sgmodule",
+      "required": false
+    },
     {
       "name": "菜鸟增强",
       "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/CainiaoAds.sgmodule",
@@ -196,6 +383,26 @@
     {
       "name": "墨迹天气",
       "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Official/MojiWeather.sgmodule",
+      "required": false
+    },
+    {
+      "name": "百度贴吧",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/TieBaAds.sgmodule",
+      "required": false
+    },
+    {
+      "name": "知乎",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/zhihu.ads.sgmodule",
+      "required": false
+    },
+    {
+      "name": "微信小程序",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/Kelee/Beta/WexinMiniPrograms_Remove_ads.sgmodule",
+      "required": false
+    },
+    {
+      "name": "YouTube",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/YoutubeAds.sgmodule",
       "required": false
     },
     {
