@@ -401,8 +401,8 @@
       "required": false
     },
     {
-      "name": "YouTube",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/YoutubeAds.sgmodule",
+      "name": "YouTube Enhance（Maasea）",
+      "url": "https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/modules/YouTube.Enhance.sgmodule",
       "required": false
     },
     {
