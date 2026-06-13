@@ -1,0 +1,50 @@
+name: Update selected Surge startup-ad module
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 03:17 UTC = 北京时间 11:17
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-startup-ads
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build Surge module
+        run: python scripts/convert.py
+
+      - name: Validate generated file
+        run: |
+          test -s dist/StartUpAds_Selected.sgmodule
+          grep -q '^#!name=' dist/StartUpAds_Selected.sgmodule
+          grep -q '^\[MITM\]' dist/StartUpAds_Selected.sgmodule
+
+      - name: Commit updated module
+        run: |
+          if git diff --quiet -- dist/StartUpAds_Selected.sgmodule; then
+            echo "No upstream changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/StartUpAds_Selected.sgmodule
+          git commit -m "chore: update selected startup-ad module"
+          git push

@@ -1,0 +1,207 @@
+{
+  "source_urls": [
+    "https://ddgksf2013.top/rewrite/StartUpAds.conf",
+    "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/Official/StartUpAds.conf"
+  ],
+  "strict_selected_syntax": true,
+  "apps": {
+    "淘宝": {
+      "markers": [
+        "taobao"
+      ],
+      "hostnames": [
+        "guide-acs.m.taobao.com"
+      ]
+    },
+    "天猫": {
+      "markers": [
+        "tianmao"
+      ],
+      "hostnames": [
+        "guide-acs.m.taobao.com"
+      ]
+    },
+    "京东": {
+      "markers": [
+        "jingdong",
+        "jingxi"
+      ],
+      "hostnames": [
+        "api.m.jd.com",
+        "bdsp-x.jd.com",
+        "dsp-x.jd.com"
+      ]
+    },
+    "拼多多": {
+      "markers": [
+        "pinduoduo"
+      ],
+      "hostnames": [
+        "api.pinduoduo.com",
+        "api.yangkeduo.com"
+      ]
+    },
+    "闲鱼": {
+      "markers": [
+        "xianyu"
+      ],
+      "hostnames": [
+        "acs.m.goofish.com",
+        "iyes.youku.com"
+      ]
+    },
+    "得物": {
+      "markers": [
+        "dewu"
+      ],
+      "hostnames": [
+        "app.dewu.com"
+      ]
+    },
+    "识货": {
+      "markers": [
+        "shihuo"
+      ],
+      "hostnames": [
+        "203.107.1.97",
+        "sh-gateway.shihuo.cn"
+      ]
+    },
+    "慢慢买": {
+      "markers": [
+        "manmanmai"
+      ],
+      "hostnames": [
+        "apapia-sqk.manmanbuy.com"
+      ]
+    },
+    "美团": {
+      "markers": [
+        "meituan",
+        "meituanwaimai"
+      ],
+      "hostnames": [
+        "peisongapi.meituan.com",
+        "*.meituan.com",
+        "img.meituan.net",
+        "s3plus.meituan.net",
+        "flowplus.meituan.net"
+      ]
+    },
+    "大众点评": {
+      "markers": [
+        "dazhongpingqiu",
+        "dazhongdianping"
+      ],
+      "hostnames": [
+        "api-tx.dsocial.xyz"
+      ]
+    },
+    "滴滴出行": {
+      "markers": [
+        "didichuxing"
+      ],
+      "hostnames": [
+        "res.xiaojukeji.com"
+      ]
+    },
+    "去哪儿旅行": {
+      "markers": [
+        "qunaer"
+      ],
+      "hostnames": [
+        "homefront.qunar.com",
+        "client.qunar.com"
+      ]
+    },
+    "菜鸟": {
+      "markers": [
+        "cainiao"
+      ],
+      "hostnames": [
+        "cn-acs.m.cainiao.com",
+        "iyes.youku.com"
+      ]
+    },
+    "肯德基": {
+      "markers": [
+        "kfc"
+      ],
+      "hostnames": [
+        "res.kfc.com.cn",
+        "dynamicad.kfc.com.cn"
+      ]
+    },
+    "豆瓣": {
+      "markers": [
+        "douban"
+      ],
+      "hostnames": [
+        "api.douban.com"
+      ]
+    },
+    "百度网盘": {
+      "markers": [
+        "baiduwangpan"
+      ],
+      "hostnames": [
+        "pan.baidu.com"
+      ]
+    },
+    "中国移动": {
+      "markers": [
+        "zhongguoyidong",
+        "zhongguoyidongjiangsu",
+        "zhongguoyidongshandong",
+        "zhongguoyidongguangxi",
+        "zhongguoyidonganhui",
+        "zhongguoyidongguangdong"
+      ],
+      "hostnames": [
+        "client.app.coc.10086.cn",
+        "wap.js.10086.cn",
+        "m.sd.10086.cn",
+        "gx.10086.cn",
+        "api.ahmobile.cn",
+        "gd.10086.cn"
+      ]
+    }
+  },
+  "external_modules": [
+    {
+      "name": "菜鸟增强",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/CainiaoAds.sgmodule",
+      "required": false
+    },
+    {
+      "name": "什么值得买",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/SmzdmAds.sgmodule",
+      "required": false
+    },
+    {
+      "name": "高德地图",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/sooyaaabo/Amap.sgmodule",
+      "required": false
+    },
+    {
+      "name": "哔哩哔哩",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/BiliBiliAds.sgmodule",
+      "required": false
+    },
+    {
+      "name": "小红书",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/XiaoHongShuAds.sgmodule",
+      "required": false
+    },
+    {
+      "name": "墨迹天气",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Official/MojiWeather.sgmodule",
+      "required": false
+    },
+    {
+      "name": "中国电信",
+      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Beta/ChinaTelecom.sgmodule",
+      "required": false
+    }
+  ]
+}

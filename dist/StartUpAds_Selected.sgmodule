@@ -1,0 +1,257 @@
+#!name=精选 App 去开屏（自动更新）
+#!desc=从墨鱼 StartUpAds.conf 提取指定 App，并合并缺失 App 的 Surge 模块
+#!author=Walvez + GitHub Actions
+#!homepage=https://github.com/Walvez/surge-startup-ads
+#!category=去广告
+#!date=2026-06-13T17:06:33+00:00
+
+# Primary source: https://ddgksf2013.top/rewrite/StartUpAds.conf
+# Primary SHA-256: 44774beb8f2701a8d40519e258f32f2a35676654cbb1d43f165df3bad9b78ce6
+# Selected apps found: 淘宝, 天猫, 京东, 拼多多, 闲鱼, 得物, 识货, 慢慢买, 美团, 大众点评, 滴滴出行, 去哪儿旅行, 菜鸟, 肯德基, 豆瓣, 百度网盘, 中国移动
+# Supplemental modules: 什么值得买: merged; 高德地图: merged; 哔哩哔哩: merged; 小红书: merged; 墨迹天气: merged; 中国电信: merged
+
+[Rule]
+DOMAIN-SUFFIX,iyes.youku.com,REJECT
+AND,((URL-REGEX,"^http:\/\/.+\/amdc\/mobileDispatch"),(USER-AGENT,"AMapiPhone*")),REJECT
+DOMAIN,amap-aos-info-nogw.amap.com,REJECT
+DOMAIN,free-aos-cdn-image.amap.com,REJECT
+DOMAIN-SUFFIX,v.smtcdns.com,REJECT
+DOMAIN-KEYWORD,me.api.moji.com,REJECT
+DOMAIN-KEYWORD,android.bugly.qq.com,REJECT
+DOMAIN-KEYWORD,av1.xdrig.com,REJECT
+DOMAIN-KEYWORD,adash.man.aliyuncs.com,REJECT
+DOMAIN,ad.api.moji.com,REJECT
+DOMAIN,adlaunch.moji.com,REJECT
+DOMAIN,ads.mojicdn.com,REJECT
+DOMAIN,v1.log.moji.com,REJECT
+DOMAIN-SUFFIX,cdn.moji.com,REJECT
+DOMAIN-SUFFIX,fds.api.moji.com,REJECT
+DOMAIN-SUFFIX,app.moji001.com,REJECT
+DOMAIN-SUFFIX,ugc.moji001.com,REJECT
+DOMAIN-SUFFIX,cdn.moji002.com,REJECT
+DOMAIN-SUFFIX,cdn2.moji002.com,REJECT
+DOMAIN,ad.21cn.com,REJECT
+DOMAIN,ad.k.21cn.com,REJECT
+DOMAIN,admarket.21cn.com,REJECT
+DOMAIN,adshows.21cn.com,REJECT
+IP-CIDR,122.229.8.47/32,REJECT,no-resolve
+IP-CIDR,122.229.29.89/32,REJECT,no-resolve
+
+[URL Rewrite]
+# ===== 淘宝 / taobao =====
+^https?:\/\/guide-acs\.m\.taobao\.com\/gw\/mtop\.taobao\.wireless\.home\.splash\.awesome\.get - reject-200
+# ===== 天猫 / tianmao =====
+^https?:\/\/guide-acs\.m\.taobao\.com\/gw\/mtop\.fc\.resource\.tacdata\.get - reject-200
+# ===== 京东 / jingxi =====
+# ===== 拼多多 / pinduoduo =====
+^https?:\/\/api\.(pinduoduo|yangkeduo)\.com\/api\/cappuccino\/splash - reject-200
+# ===== 闲鱼 / xianyu =====
+^https?:\/\/acs\.m\.goofish\.com\/gw\/mtop.*splash\.ads - reject-200
+# ===== 得物 / dewu =====
+^https:\/\/app\.dewu\.com\/api\/v1\/app\/advertisement\/ - reject-200
+# ===== 识货 / shihuo =====
+^https?:\/\/203\.107\.1\.97\/v - reject
+# ===== 慢慢买 / manmanmai =====
+# ===== 美团 / meituan =====
+^https?:\/\/peisongapi\.meituan\.com\/client\/getInitiateImage - reject-200
+^https?:\/\/img\.meituan\.net\/(adunion|display|midas)\/\w+\.(gif|jpg|jpg\.webp)$ - reject-200
+^https?:\/\/(s3plus|flowplus)\.meituan\.net\/v\d\/\w+\/linglong\/\w+\.(gif|jpg|mp4) - reject-200
+^https?:\/\/p\d\.meituan\.net\/(bizad|wmbanner)\/\w+\.jpg - reject-200
+^https?:\/\/p\d\.meituan\.net\/movie\/\w+\.jpg\?may_covertWebp - reject-200
+# ===== 美团 / meituanwaimai =====
+^https?:\/\/img\.meituan\.net\/(bizad|brandCpt)\/\w+\.(png|jpg) - reject-200
+^https?:\/\/.*\.meituan\.com\/api\/v\d\/(openscreen\?ad|appstatus\?ad|loadInfo\?|startpicture) - reject-200
+^http:\/\/s3plus\.meituan\.net\/.*\/brandcpt-vedio\/.*\?time - reject-200
+# ===== 大众点评 / dazhongpingqiu =====
+^https?:\/\/api-tx\.dsocial\.xyz\/api\/.*\/ad_ - reject-200
+# ===== 滴滴出行 / didichuxing =====
+https?://res\.xiaojukeji\.com\/resapi\/activity\/mget - reject-200
+https?:\/\/res\.xiaojukeji\.com\/resapi\/activity\/get(Ruled|Preload|PasMultiNotices) - reject-200
+# ===== 去哪儿旅行 / qunaer =====
+https://homefront.qunar.com/front/splash/ad - reject-200
+^https?:\/\/client\.qunar\.com\/pitcher-proxy\?qrt=p_splashAd - reject-200
+# ===== 菜鸟 / cainiao =====
+^https?:\/\/cn-acs\.m\.cainiao\.com\/gw\/mtop\.cainiao\.guoguo\.nbnetflow\.ads\.(show|mshow)\.cn\/ - reject-200
+^https?:\/\/iyes\.youku\.com\/uts/v\d\/start - reject-200
+# ===== 肯德基 / kfc =====
+^https?:\/\/res.kfc.com.cn\/advertisement\/ - reject-200
+https://dynamicad.kfc.com.cn/api/app5/homepage/ai/popup - reject-200
+# ===== 豆瓣 / douban =====
+^https?:\/\/api\.douban\.com\/v2\/app_ads\/splash - reject-200
+^https?:\/\/api\.douban\.com\/b.*\/common_ads\?.* - reject-200
+# ===== 百度网盘 / baiduwangpan =====
+^https?:\/\/pan\.baidu\.com\/act\/v\d\/(bchannel|welfare)\/list - reject-200
+^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/pcs\/ad - reject-200
+^https?:\/\/pan\.baidu\.com\/act\/api\/activityentry - reject-200
+# ===== 中国移动 / zhongguoyidong =====
+^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/init\/startInit - reject-200
+# ===== 中国移动 / zhongguoyidongjiangsu =====
+^https?:\/\/wap\.js\.10086\.cn\/jsmccClient\/cd\/market_content\/api\/v\d\/market_content\.page\.query - reject-200
+# ===== 中国移动 / zhongguoyidongshandong =====
+https?:\/\/m\.sd\.10086\.cn\/zapi\/app_common\/homeWelcome\/welcome.do - reject-200
+# ===== 中国移动 / zhongguoyidongguangxi =====
+^https?:\/\/gx\.10086\.cn\/zt-portal\/gxhzg\/portal\/app\/api\/v - reject-200
+# ===== 中国移动 / zhongguoyidongguangdong =====
+^https?:\/\/gd\.10086\.cn\/gmccapp\/serv\/\?servicename=GMCCAPP_704_002_001_001 - reject-200
+^https?:\/\/cloud\.189\.cn\/include\/splash\/ - reject
+
+[Map Local]
+# [什么值得买] > 好价详情页去广告@blackmatrix7
+^https?:\/\/haojia\.m\.smzdm\.com\/detail_modul\/other_modul data-type=text data=" " status-code=200
+# [什么值得买] > 好价详情页红包小助手@blackmatrix7
+^https?:\/\/haojia\.m\.smzdm\.com\/detail_modul\/user_related_modul data-type=text data=" " status-code=200
+# [什么值得买] > Wiki@blackmatrix7
+^https?:\/\/haojia\.m\.smzdm\.com\/detail_modul\/wiki_related_modul data-type=text data=" " status-code=200
+# [高德地图] 开屏广告
+^https:\/\/amap-aos-info-nogw\.amap\.com\/ws\/aos\/alimama\/splash_screen_rt data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [高德地图] 导航详情页 - 路线规划、地点详情页、搜索详情页、导航结束页
+^https:\/\/m5\.amap\.com\/ws\/aos\/main\/page\/product\/list\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/m5\.amap\.com\/ws\/shield\/search\/new_hotword\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/card-service-(?:car-end|route-plan) data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/m5\.amap\.com\/ws\/shield\/search_poi\/tips_adv\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/oss\.amap\.com\/ws\/banner\/lists\/\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [高德地图] 首页 - 推广卡片、红点角标、右上角动图、搜索框热词、左下角天气、消息横幅、底部AI
+^https:\/\/ai\.amap\.com\/v1\/ai_rec\/ data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/(?:main-page-assets|main-page-location|ridewalk-end-fc|usr-profile-fc\/homeV2) data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/m5\.amap\.com\/ws\/(?:mapapi\/hint_text\/offline_data|message\/notice\/list|shield\/search\/new_hotword) data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/m5\.amap\.com\/ws\/shield\/scene\/recommend\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/m5\.amap\.com\/ws\/valueadded\/weather\/v2\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/sns\.amap\.com\/ws\/msgbox\/pull_mp\? data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [高德地图] 打车页 - 红点角标、弹窗、天气图标、推广卡片
+^https:\/\/m5-zb\.amap\.com\/ws\/boss\/(?:order\/car\/(?:feedback\/get_card_questions|feedback\/viptips|king_toolbox_car_bubble|remark\/satisfactionConf|rights_information)|tips\/onscene_visual_optimization) data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+^https:\/\/m5-zb\.amap\.com\/ws\/boss\/(?:pay\/web\/paySuccess\/info\/request|transportation\/diversion\/resource\/driving) data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [哔哩哔哩] > BiliBili_哔哩哔哩_Version
+^https?:\/\/bilibili.2025.04.02/c136 data-type=text data=" " status-code=200
+# [哔哩哔哩] > BiliBili_哔哩哔哩_屏蔽广告浮窗@ddgksf2013
+^https?:\/\/api\.bilibili\.com\/pgc\/activity\/deliver\/material\/receive data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [哔哩哔哩] > BiliBili_哔哩哔哩_Material_Ad@ddgksf2013
+^https?:\/\/api\.bilibili\.com\/x\/vip\/ads\/material\/report data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [哔哩哔哩] > BiliBili_哔哩哔哩_小卡片广告@ddgksf2013
+^https://api.bilibili.com/pgc/season/player/cards data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [哔哩哔哩] > BiliBili_哔哩哔哩_点击追番Card@ddgksf2013
+^https?:\/\/api\.bilibili\.com\/pgc\/season\/player\/ogv\/cards data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [哔哩哔哩] > BiliBili_哔哩哔哩_应用开屏去广告@bm7
+^https://app.bilibili.com/x/v2/splash/show data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [哔哩哔哩] > BiliBili_哔哩哔哩_漫画去广告@ddgksf2013
+^https?:\/\/manga\.bilibili\.com\/twirp\/comic\.v\d\.Comic\/(Flash|ListFlash|GetActivityTab) data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [哔哩哔哩] > BiliBili_哔哩哔哩_填词@ddgksf2013
+^https?:\/\/app\.bilibili\.com\/x\/v\d\/search\/defaultwords data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# [哔哩哔哩] > BiliBili_哔哩哔哩_屏蔽DefaultWord@ddgksf2013
+^https?:\/\/(app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.interface\.v1\.Search\/Default data-type=text data=" " status-code=200
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/notes\/recommend_info\? data-type=text data=" " status-code=200
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/system_service\/splash data-type=text data=" " status-code=200
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/gslb data-type=text data=" " status-code=200
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/httpdns data-type=text data=" " status-code=200
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/(tag\/)?ads data-type=text data=" " status-code=200
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/v\d+\/stateReport data-type=text data=" " status-code=200
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/data\/native\/matrix_switches data-type=text data=" " status-code=200
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/user\/teenager\/status data-type=text data=" " status-code=200
+^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/guide\/home_guide data-type=text data=" " status-code=200
+^https?:\/\/zt-app\.go189\.cn\/zt-app\/welcome\/.*?Animation data-type=tiny-gif status-code=200
+
+[Body Rewrite]
+http-response ^https?:\/\/sh-gateway\.shihuo\.cn\/v\d\/services\/sh-adapi\/home\/screen egin_time":"\d{4} egin_time":"2099
+http-response ^https?:\/\/apapia-sqk\.manmanbuy\.com\/index_json\.ashx splashAD ddgksf2013
+http-response ^https?:\/\/res.kfc.com.cn\/CRM\/kfcad\/apphome6\/apphome.*json bootStrapAd ddgksf2013
+http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/search_business\/process\/marketingOperationStructured\? 'delpaths([["data","tipsOperationLocation"]])'
+http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/search_business\/process\/marketingOperationStructured\? 'delpaths([["obj","data","resourcePlacement"]])'
+http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/search_poi\/homepage\? 'delpaths([["history_tags"]])'
+http-response-jq ^https:\/\/m5-zb\.amap\.com\/ws\/sharedtrip\/taxi\/order_detail_car_tips\? 'delpaths([["data","carTips","data","popupInfo"]])'
+http-response-jq ^https:\/\/m5\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable\/ '.data.aiNativeV16={"status":1,"version":"","value":""}|.data.aiNative1520={"status":1,"version":"","value":""}|.data.ai_agent_enter_style_cursor={"status":1,"version":"","value":""}|.data.ai_scenes={"status":1,"version":"","value":""}|.data.aiNativeRC06={"status":1,"version":"","value":""}|.data.plan_ai={"status":1,"version":"","value":""}|.data.ai_native_smart_island={"status":1,"version":"","value":""}|.data.llm={"status":2,"version":"","value":""}'
+
+[Script]
+京东_1 = type=http-response, pattern=^https?:\/\/api\.m\.jd\.com\/api\?functionId=delivery_show, requires-body=true, max-size=-1, timeout=60, script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/startup.js
+# [什么值得买] > 搜索框填词@ddgksf2013
+什么值得买_2 = type=http-response, pattern=^https?:\/\/s-api.smzdm\.com\/sou\/search_default_keyword, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+# [什么值得买] > 开屏去广告@blackmatrix7@ddgksf2013
+什么值得买_3 = type=http-response, pattern=^https?:\/\/app-api\.smzdm\.com\/util\/loading, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+什么值得买_4 = type=http-response, pattern=^https?:\/\/.*zdmimg\.com\/cpm\/api\/v\d\/advert_distribution\/get_all_advertise, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+# [什么值得买] > 首页去广告@blackmatrix7@ddgksf2013
+什么值得买_5 = type=http-response, pattern=^https?:\/\/homepage-api\.smzdm\.com\/v3\/home, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+# [什么值得买] > 好价去广告@blackmatrix7
+什么值得买_6 = type=http-response, pattern=^https?:\/\/haojia-api\.smzdm\.com\/home\/list, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+# [什么值得买] > 好价详情页去广告@blackmatrix7
+什么值得买_7 = type=http-response, pattern=^https?:\/\/haojia\.m\.smzdm\.com\/detail_modul\/article_releated_modul, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+# [什么值得买] > 百科去广告@blackmatrix7
+什么值得买_8 = type=http-response, pattern=^https?:\/\/baike-api\.smzdm\.com\/home_v3\/list, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+# [什么值得买] > 搜索结果去广告@blackmatrix7
+什么值得买_9 = type=http-response, pattern=^https?:\/\/s-api\.smzdm\.com\/sou\/list_v10, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+# [什么值得买] > 搜索标签去广告@blackmatrix7
+什么值得买_10 = type=http-response, pattern=^https?:\/\/s-api\.smzdm\.com\/sou\/filter\/tags\/hot_tags, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+# [什么值得买] > 值会员权益中心banner广告@blackmatrix7
+什么值得买_11 = type=http-response, pattern=^https?:\/\/zhiyou\.m\.smzdm\.com\/user\/vip\/ajax_get_banner, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/SmzdmAds/ddgksf2013_smzdm_json.js, requires-body=true, max-size=-1, timeout=60
+# [高德地图] 导航详情页 - 路线规划、地点详情页、搜索详情页、导航结束页
+高德地图_12 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/aos\/perception\/publicTravel\/beforeNavi\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+高德地图_13 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/bus\/plan\/integrate\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+高德地图_14 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/c3frontend\/(?:af-(?:hotel|launch)\/page\/main|af-nearby\/nearby), script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+高德地图_15 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/perception\/drive\/(?:routeInfo|routePlan), script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+高德地图_16 = type=http-response, pattern=^https:\/\/(?:info|m5)\.amap\.com\/ws\/shield\/search\/(?:common\/coupon\/info|poi\/detail), script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+高德地图_17 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/shield\/search_bff\/hotword\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+高德地图_18 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/shield\/search_poi\/(?:mps|search\/sp|sug|tips_operation_location), script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+# [高德地图] 首页 - 推广卡片、红点角标、右上角动图、搜索框热词、左下角天气、消息横幅
+高德地图_19 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/faas\/amap-navigation\/(?:card-service-plan-home|main-page), script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+高德地图_20 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/shield\/frogserver\/aocs\/updatable\/1\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+# [高德地图] 我的页面 - 个人主页、推广卡片
+高德地图_21 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/shield\/dsp\/profile\/index\/nodefaasv3\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+# [高德地图] 附近页
+高德地图_22 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/shield\/search\/nearbyrec_smart\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+# [高德地图] 开屏广告
+高德地图_23 = type=http-response, pattern=^https:\/\/m5\.amap\.com\/ws\/valueadded\/alimama\/splash_screen\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+# [高德地图] 打车页 - 红点角标、弹窗、天气图标、推广卡片
+高德地图_24 = type=http-response, pattern=^https:\/\/m5-zb\.amap\.com\/ws\/boss\/(?:car\/order\/content_info|order_web\/friendly_information), script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+高德地图_25 = type=http-response, pattern=^https:\/\/m5-zb\.amap\.com\/ws\/promotion-web\/resource(\/home)?\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/sooyaaabo/Amap/kelee.one_Amap_remove_ads.js, requires-body=true
+# [哔哩哔哩] > BiliBili_哔哩哔哩_视频播放下方商品推广@ddgksf2013
+哔哩哔哩_26 = type=http-response, pattern=^https?:\/\/api\.bili(api|bili)\.(net|com)\/pgc\/season\/app\/related\/recommend\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_屏蔽直播间商品广告浮窗[还有一个域名]@ddgksf2013
+哔哩哔哩_27 = type=http-response, pattern=^https?:\/\/api\.live\.bilibili\.com\/xlive\/e-commerce-interface\/v\d\/ecommerce-user\/get_shopping_info\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_直播去广告@bm7
+哔哩哔哩_28 = type=http-response, pattern=^https?:\/\/api\.live\.bilibili\.com\/xlive\/app-room\/v1\/index\/getInfoByRoom, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_应用开屏广告预加载@yjqiang
+哔哩哔哩_29 = type=http-response, pattern=^https:\/\/app\.bilibili\.com\/x\/v2\/splash\/list, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_1080P高码率+4K画质[番剧和影视除外]@ddgksf2013
+哔哩哔哩_30 = type=http-response, pattern=^https?:\/\/app\.bilibili\.com\/x\/v2\/account\/myinfo\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_屏蔽直播页顶部轮播图@ddgksf2013
+哔哩哔哩_31 = type=http-response, pattern=^https?:\/\/api\.live\.bilibili\.com\/xlive\/app-interface\/v2\/index\/feed, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_推荐去广告@ddgksf2013
+哔哩哔哩_32 = type=http-response, pattern=^https?:\/\/app\.bilibili\.com\/x\/v2\/feed\/index, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_追番去广告@ddgksf2013
+哔哩哔哩_33 = type=http-response, pattern=^https?:\/\/api\.(bilibili|biliapi)\.(com|net)\/pgc\/page\/bangumi, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_观影页面去广告@ddgksf2013
+哔哩哔哩_34 = type=http-response, pattern=^https?:\/\/api\.(bilibili|biliapi)\.(com|net)\/pgc\/page\/cinema\/tab\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_标签页处理@ddgksf2013
+哔哩哔哩_35 = type=http-response, pattern=^https?:\/\/app\.bilibili\.com\/x\/resource\/show\/tab, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_我的页面处理@ddgksf2013
+哔哩哔哩_36 = type=http-response, pattern=^https?:\/\/app\.bilibili\.com\/x\/v2\/account\/mine, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_屏蔽首页右上活动@ddgksf2013
+哔哩哔哩_37 = type=http-response, pattern=^https?:\/\/app\.bilibili\.com\/x\/resource\/top\/activity, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] > BiliBili_哔哩哔哩_热搜发现@ddgksf2013
+哔哩哔哩_38 = type=http-response, pattern=^https://app.bilibili.com/x/v2/search/square, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/ddgksf2013.top_bilibili.ads.js, requires-body=true, max-size=-1, timeout=60
+# [哔哩哔哩] ～ BiliBili_哔哩哔哩_搜索去广告@BiliUniverse
+哔哩哔哩_39 = type=http-response, pattern=^https?:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.polymer\.app\.search\.v1\.Search\/SearchAll$, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/BiliUniverse_response.bundle.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=60
+# [哔哩哔哩] ～ BiliBili_哔哩哔哩_交互点赞投票弹幕及会员弹幕@BiliUniverse
+哔哩哔哩_40 = type=http-response, pattern=^https?:\/\/(app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.community\.service\.dm\.v1\.DM\/(DmView|DmSegMobile), script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/BiliUniverse_response.bundle.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=60
+# [哔哩哔哩] ～ BiliBili_哔哩哔哩_青少年弹窗@BiliUniverse
+哔哩哔哩_41 = type=http-response, pattern=^https:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.interface\.v1\.Teenagers\/ModeStatus, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/BiliUniverse_response.bundle.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=60
+# [哔哩哔哩] ～ BiliBili_哔哩哔哩_UP主推荐广告[适配ipad端]@BiliUniverse
+哔哩哔哩_42 = type=http-response, pattern=^https?:\/\/(app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.(view|viewunite)\.v1\.View\/(View|TFInfo)$, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/BiliUniverse_response.bundle.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=60
+# [哔哩哔哩] ～ BiliBili_哔哩哔哩_动态综合页及视频页去广告@BiliUniverse
+哔哩哔哩_43 = type=http-response, pattern=^https?:\/\/(app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.dynamic\.v2\.Dynamic\/Dyn(All|Video)$, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/BiliBiliAds/BiliUniverse_response.bundle.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=60
+小红书_44 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/tabfeed, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_45 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/video\/save, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_46 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/live_photo\/save, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_47 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/notes\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_48 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/widgets, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_49 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/redtube\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_50 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/videofeed\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_51 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/feed\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_52 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/note\/imagefeed, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_53 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/system_service\/splash_config, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_54 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/homefeed\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_55 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/system_service\/config\?, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_56 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/hot_list, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_57 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/hint, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_58 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/homefeed\/categories, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+小红书_59 = type=http-response, pattern=^https?:\/\/[a-z]+\.xiaohongshu\.com\/api\/sns\/v\d+\/search\/trending, script-path=https://github.com/ifflagged/Romeo/raw/main/Modules/JS/ddgksf2013/XiaoHongShuAds/ddgksf2013.top_redbook.ads.js, requires-body=true, max-size=-1, timeout=60
+
+[MITM]
+hostname = %APPEND% guide-acs.m.taobao.com, api.m.jd.com, bdsp-x.jd.com, dsp-x.jd.com, api.pinduoduo.com, api.yangkeduo.com, acs.m.goofish.com, iyes.youku.com, app.dewu.com, 203.107.1.97, sh-gateway.shihuo.cn, apapia-sqk.manmanbuy.com, peisongapi.meituan.com, *.meituan.com, img.meituan.net, s3plus.meituan.net, flowplus.meituan.net, api-tx.dsocial.xyz, res.xiaojukeji.com, homefront.qunar.com, client.qunar.com, cn-acs.m.cainiao.com, res.kfc.com.cn, dynamicad.kfc.com.cn, api.douban.com, pan.baidu.com, client.app.coc.10086.cn, wap.js.10086.cn, m.sd.10086.cn, gx.10086.cn, api.ahmobile.cn, gd.10086.cn, app-api.smzdm.com, *.zdmimg.com, homepage-api.smzdm.com, haojia-api.smzdm.com, haojia.m.smzdm.com, baike-api.smzdm.com, s-api.smzdm.com, zhiyou.m.smzdm.com, *.amap.com, -broadcast.chat.bilibili.com, -cm.bilibili.com, -*cdn*.biliapi.net, -*tracker*.biliapi.net, app.bilibili.com, api.live.bilibili.com, *.bilibili.com, *.bili*.*, *.bilibili.*, grpc.biliapi.net, *biliapi.net, *.xiaohongshu.com, cloud.189.cn, zt-app.go189.cn
