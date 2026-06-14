@@ -49,7 +49,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 
 ## 可选的 Surge 专用模块
 
-以下模块**不会再合并进本项目的主模块**。需要深度去广告时，可复制对应链接，在 Surge 中单独选择“从 URL 安装模块”。
+以下模块**不会再合并进本项目的主模块**。需要深度去广告时，可展开对应项目，复制订阅地址，再到 Surge 中选择“从 URL 安装模块”。
 
 单独安装的好处：
 
@@ -59,24 +59,143 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 - 避免一个大型融合模块包含过多 MITM 域名和脚本；
 - 不需要某项功能时，可以完全不安装。
 
-| App / 功能 | 主要作者或维护者 | 安装链接 | 说明 |
-|---|---|---|---|
-| 闲鱼增强 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/GoofishAds.sgmodule` | 补充首页及部分信息流广告处理 |
-| 菜鸟增强 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/CainiaoAds.sgmodule` | 补充首页、搜索栏、寄件及个人页推广处理 |
-| 什么值得买 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/SmzdmAds.sgmodule` | 处理首页、好价、百科、搜索及会员页面推广 |
-| 高德地图 | sooyaaabo | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/sooyaaabo/Amap.sgmodule` | 处理首页、搜索热词、路线及导航结束页推广 |
-| 哔哩哔哩 ADBlock | BiliUniverse | `https://github.com/BiliUniverse/ADBlock/releases/latest/download/BiliBili.ADBlock.sgmodule` | 支持参数化处理开屏、推荐、搜索、直播、动态、评论广告等；如遇评论加载异常，可在模块参数中关闭“评论去广告” |
-| 小红书 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/XiaoHongShuAds.sgmodule` | 处理开屏、首页、搜索和活动入口 |
-| 墨迹天气 | fmz200 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Official/MojiWeather.sgmodule` | 处理开屏及部分广告资源 |
-| 百度贴吧 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/TieBaAds.sgmodule` | 处理信息流、热搜及页面广告 |
-| 知乎 | ddgksf2013、blackmatrix7 等 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/zhihu.ads.sgmodule` | 处理推荐、热榜、搜索、回答页及弹窗 |
-| 微信小程序 | Kelee | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/Kelee/Beta/WexinMiniPrograms_Remove_ads.sgmodule` | 覆盖多个常用微信小程序，规则范围较广 |
-| YouTube Enhance | Maasea | `https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule` | 适用于 YouTube 与 YouTube Music，支持去广告、画中画、后台播放和翻译 |
-| 中国电信 | fmz200 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Beta/ChinaTelecom.sgmodule` | 处理欢迎页、开屏及部分广告请求 |
+> 每个模块的订阅地址都放在独立代码块中，GitHub 右上角会显示复制按钮。
+
+<details>
+<summary><strong>闲鱼增强</strong> · ddgksf2013</summary>
+
+补充首页及部分信息流广告处理。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/GoofishAds.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>菜鸟增强</strong> · ddgksf2013</summary>
+
+补充首页、搜索栏、寄件及个人页推广处理。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/CainiaoAds.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>什么值得买</strong> · ddgksf2013</summary>
+
+处理首页、好价、百科、搜索及会员页面推广。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/SmzdmAds.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>高德地图</strong> · sooyaaabo</summary>
+
+处理首页、搜索热词、路线及导航结束页推广。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/sooyaaabo/Amap.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>哔哩哔哩 ADBlock</strong> · BiliUniverse</summary>
+
+支持参数化处理开屏、推荐、搜索、直播、动态和评论广告。出现评论加载异常时，可在模块参数中关闭“评论去广告”。
+
+```text
+https://github.com/BiliUniverse/ADBlock/releases/latest/download/BiliBili.ADBlock.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>小红书</strong> · ddgksf2013</summary>
+
+处理开屏、首页、搜索和活动入口。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/XiaoHongShuAds.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>墨迹天气</strong> · fmz200</summary>
+
+处理开屏及部分广告资源。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Official/MojiWeather.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>百度贴吧</strong> · ddgksf2013</summary>
+
+处理信息流、热搜及页面广告。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/TieBaAds.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>知乎</strong> · ddgksf2013、blackmatrix7 等</summary>
+
+处理推荐、热榜、搜索、回答页及弹窗。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/zhihu.ads.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>微信小程序</strong> · Kelee</summary>
+
+覆盖多个常用微信小程序，规则范围较广。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/Kelee/Beta/WexinMiniPrograms_Remove_ads.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>YouTube Enhance</strong> · Maasea</summary>
+
+适用于 YouTube 与 YouTube Music，支持去广告、画中画、后台播放和翻译。
+
+```text
+https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>中国电信</strong> · fmz200</summary>
+
+处理欢迎页、开屏及部分广告请求。
+
+```text
+https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Beta/ChinaTelecom.sgmodule
+```
+
+</details>
 
 说明：
 
-- `ifflagged / Romeo` 在上表中主要作为 Surge 模块镜像和整理来源，不代表所有规则均由其原创。
+- `ifflagged / Romeo` 在这里主要作为 Surge 模块镜像和整理来源，不代表所有规则均由其原创。
 - YouTube 建议直接使用 Maasea 原始模块，不要再通过本项目进行融合。
 - 不建议同时安装功能重复的多个专用模块。
 - 专用模块可能扩大 MITM 范围，安装前应查看模块内容和来源。
