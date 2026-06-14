@@ -233,6 +233,22 @@
         "acs-m.freshippo.com"
       ]
     },
+    "米家": {
+      "markers": [
+        "mijia"
+      ],
+      "hostnames": [
+        "home.mi.com"
+      ]
+    },
+    "小米": {
+      "markers": [
+        "xiaomi"
+      ],
+      "hostnames": [
+        "api.m.mi.com"
+      ]
+    },
     "顺丰速运": {
       "markers": [
         "ShunFeng"

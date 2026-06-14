@@ -34,6 +34,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 | 文娱与内容 | 豆瓣、腾讯新闻、百度网盘、百度地图、夸克、淘票票、猫眼、网易严选 |
 | 餐饮 | 肯德基、麦当劳、必胜客 |
 | 通信服务 | 中国移动、中国联通 |
+| 智能家居与小米服务 | 米家、小米 |
 | 其他 | 菜鸟、贝壳找房、大麦、顺丰速运 |
 
 这部分主要用于开屏、启动页及少量基础广告处理。上游规则更新后，GitHub Actions 会重新提取并转换。
@@ -64,7 +65,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 | 菜鸟增强 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/CainiaoAds.sgmodule` | 补充首页、搜索栏、寄件及个人页推广处理 |
 | 什么值得买 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/SmzdmAds.sgmodule` | 处理首页、好价、百科、搜索及会员页面推广 |
 | 高德地图 | sooyaaabo | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/sooyaaabo/Amap.sgmodule` | 处理首页、搜索热词、路线及导航结束页推广 |
-| 哔哩哔哩 | ddgksf2013 等 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/BiliBiliAds.sgmodule` | 深度处理推荐、直播、搜索、开屏等内容 |
+| 哔哩哔哩 ADBlock | BiliUniverse | `https://github.com/BiliUniverse/ADBlock/releases/latest/download/BiliBili.ADBlock.sgmodule` | 支持参数化处理开屏、推荐、搜索、直播、动态、评论广告等；如遇评论加载异常，可在模块参数中关闭“评论去广告” |
 | 小红书 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/XiaoHongShuAds.sgmodule` | 处理开屏、首页、搜索和活动入口 |
 | 墨迹天气 | fmz200 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Official/MojiWeather.sgmodule` | 处理开屏及部分广告资源 |
 | 百度贴吧 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/TieBaAds.sgmodule` | 处理信息流、热搜及页面广告 |
@@ -144,6 +145,7 @@ GitHub Actions 会定期执行：
 - ddgksf2013 / 墨鱼规则；
 - ifflagged / Romeo 镜像；
 - Maasea；
+- BiliUniverse；
 - Kelee；
 - blackmatrix7；
 - sooyaaabo；
