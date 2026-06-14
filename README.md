@@ -1,12 +1,8 @@
-# Surge 精选 App 去广告模块
+# Surge 精选 App 去开屏模块
 
-将多个上游规则整理为一个 Surge 模块，主要用于去除常用 App 的开屏广告，并对部分 App 的首页、信息流、弹窗、搜索推荐及微信小程序广告进行补充处理。
+本项目将墨鱼 `StartUpAds.conf` 中指定 App 的 Quantumult X 重写规则自动转换为 Surge 模块，并额外合并本仓库自行维护的少量转换模块。
 
-本仓库不会把所有上游规则原样塞进一个模块，而是采用三种方式组合：
-
-1. 从墨鱼 `StartUpAds.conf` 中提取指定 App，并由本仓库自动转换为 Surge 语法；
-2. 对适合深度处理的 App，直接合并现成的 Surge 专用模块；
-3. 对只有 Quantumult X 版本、但确有需要的规则，由本仓库单独转换成 Surge 模块后再合并。
+为了便于维护和排查，本项目不再把多个第三方 Surge 专用模块全部融合进同一个文件。深度去广告模块改为在 README 中单独推荐，由用户按需安装。
 
 最终生成文件：
 
@@ -20,35 +16,15 @@ dist/StartUpAds_Selected.sgmodule
 https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_Selected.sgmodule
 ```
 
-在 Surge 中选择“从 URL 安装模块”，粘贴以上地址并启用模块。
+在 Surge 中选择“从 URL 安装模块”，粘贴以上地址并启用。
 
-## 使用前提：开启 HTTPS 解密
-
-本模块中的大部分规则依赖 Surge 的 MITM（HTTPS 解密）。只安装模块、不安装证书或未开启 HTTPS 解密时，很多规则不会生效。
-
-### Surge Mac 本机
-
-1. 在 Surge Mac 的 HTTPS 解密设置中生成并安装 CA 证书。
-2. 将该证书安装到 macOS 系统钥匙串，并设为信任。
-3. 打开 Surge 的 HTTPS 解密功能。
-4. 确认本模块已启用。
-
-### 由 Surge Mac 接管的 iPhone / iPad
-
-1. 在每台 iPhone 或 iPad 上安装 Surge Mac 提供的同一张 CA 证书。
-2. 进入“设置 → 通用 → VPN 与设备管理”，完成描述文件安装。
-3. 进入“设置 → 通用 → 关于本机 → 证书信任设置”，为该 CA 开启“完全信任”。
-4. 确保该设备的流量实际经过 Surge Mac，并且 Surge Mac 已开启 HTTPS 解密。
-
-不同版本的 Surge 和系统界面名称可能略有差异。若 Surge 请求记录中出现 `MITM Failed`，通常表示证书未正确安装或信任、HTTPS 解密未开启，或 App 使用了证书锁定。
-
-## 规则来源与转换方式
+## 当前主模块包含什么
 
 ### 1. 墨鱼 StartUpAds 主配置转换
 
 以下 App 的规则来自 `ddgksf2013 / 墨鱼` 的 `StartUpAds.conf`。
 
-上游原始格式是 **Quantumult X 重写语法**；本仓库的 `scripts/convert.py` 会每天自动提取这些 App 的规则，并转换为 Surge 的 `[Rule]`、`[URL Rewrite]`、`[Body Rewrite]`、`[Script]` 和 `[MITM]` 等格式。
+上游原始格式为 **Quantumult X 重写语法**，本仓库的 `scripts/convert.py` 会自动提取指定 App，并转换为 Surge 的 `[Rule]`、`[URL Rewrite]`、`[Body Rewrite]`、`[Script]`、`[Map Local]` 和 `[MITM]` 等区块。
 
 | 分类 | App |
 |---|---|
@@ -58,107 +34,108 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 | 文娱与内容 | 豆瓣、腾讯新闻、百度网盘、百度地图、夸克、淘票票、猫眼、网易严选 |
 | 餐饮 | 肯德基、麦当劳、必胜客 |
 | 通信服务 | 中国移动、中国联通 |
-| 其他 | 贝壳找房、大麦、顺丰速运 |
+| 其他 | 菜鸟、贝壳找房、大麦、顺丰速运 |
 
-说明：
+这部分主要用于开屏、启动页及少量基础广告处理。上游规则更新后，GitHub Actions 会重新提取并转换。
 
-- 这一类是“**墨鱼 Quantumult X 规则 → 本仓库转换为 Surge**”。
-- `闲鱼` 和 `菜鸟` 除了主配置中的基础规则外，还额外合并了专用 Surge 模块进行增强。
-- 上游规则更新后，GitHub Actions 会重新提取并转换。
-
-### 2. 直接合并的 Surge 专用模块
-
-以下项目使用的是现成的 **Surge 原生模块**，本仓库不会把它们当作 Quantumult X 规则再次转换，而是直接解析并合并其 Surge 区块。
-
-这些模块目前主要通过 `ifflagged / Romeo` 镜像获取。
-
-| App / 功能 | 主要来源或署名 | 原始格式 | 在本项目中的作用 |
-|---|---|---|---|
-| 闲鱼增强 | ddgksf2013 | Surge `.sgmodule` | 在基础开屏规则之外，补充首页和部分信息流广告处理 |
-| 菜鸟增强 | ddgksf2013 | Surge `.sgmodule` | 补充首页瀑布流、搜索栏、寄件券、底部推广及“我的”页面 |
-| 什么值得买 | ddgksf2013 | Surge `.sgmodule` | 处理开屏、首页、好价、百科、搜索和会员中心推广 |
-| 高德地图 | sooyaaabo | Surge `.sgmodule` | 处理开屏、首页、搜索热词、路线、地点详情和导航结束页等推广 |
-| 哔哩哔哩 | ddgksf2013 | Surge `.sgmodule` | 处理开屏、浮窗、小卡片、搜索默认词及部分漫画广告 |
-| 小红书 | ddgksf2013 | Surge `.sgmodule` | 处理开屏、部分搜索推荐、首页引导和活动入口 |
-| 墨迹天气 | fmz200 | Surge `.sgmodule` | 处理开屏、广告资源和部分推广请求 |
-| 百度贴吧 | ddgksf2013 | Surge `.sgmodule` | 处理信息流、页面中部广告、热搜和部分个人页推广 |
-| 知乎 | ddgksf2013 整合，包含 blackmatrix7 等贡献 | Surge `.sgmodule` | 处理开屏、推荐信息流、热榜、搜索、回答页及部分弹窗 |
-| 微信小程序 | Kelee | Surge `.sgmodule` | 处理多个常用微信小程序的弹窗、Banner、信息流及活动推广 |
-| YouTube Enhance | Maasea | Surge `.sgmodule`（本仓库固定默认参数后合并） | 适用于 YouTube 与 YouTube Music，处理广告、画中画、后台播放及部分界面按钮；脚本直接使用 Maasea 原仓库 |
-| 中国电信 | fmz200 | Surge `.sgmodule` | 处理欢迎页动画、开屏及部分广告域名 |
-
-说明：
-
-- 这一类是“**原生 Surge 专用模块 → 本仓库直接合并**”。
-- 模块可能包含其他作者贡献的脚本或规则；表中列的是当前模块的主要来源或署名。
-- `ifflagged / Romeo` 在这里主要作为镜像和格式整理来源，不代表所有规则都由其原创。
-
-### 3. 本仓库单独转换的模块
+### 2. 本仓库单独转换的模块
 
 | 功能 | 原始来源 | 原始格式 | 处理方式 |
 |---|---|---|---|
-| 影视去广告 | ddgksf2013 `FakeiOSAds.conf` | Quantumult X `.conf` | 由本仓库手工转换为 `modules/FakeiOSAds.sgmodule`，再参与合并 |
+| 影视去广告 | ddgksf2013 `FakeiOSAds.conf` | Quantumult X `.conf` | 由本仓库转换为 `modules/FakeiOSAds.sgmodule`，再合并进主模块 |
+
+当前主模块只包含以上两类内容。
+
+## 可选的 Surge 专用模块
+
+以下模块**不会再合并进本项目的主模块**。需要深度去广告时，可复制对应链接，在 Surge 中单独选择“从 URL 安装模块”。
+
+单独安装的好处：
+
+- 可以按需启用或停用；
+- 某个 App 出现异常时更容易排查；
+- 更新来源更直接；
+- 避免一个大型融合模块包含过多 MITM 域名和脚本；
+- 不需要某项功能时，可以完全不安装。
+
+| App / 功能 | 主要作者或维护者 | 安装链接 | 说明 |
+|---|---|---|---|
+| 闲鱼增强 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/GoofishAds.sgmodule` | 补充首页及部分信息流广告处理 |
+| 菜鸟增强 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/CainiaoAds.sgmodule` | 补充首页、搜索栏、寄件及个人页推广处理 |
+| 什么值得买 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/SmzdmAds.sgmodule` | 处理首页、好价、百科、搜索及会员页面推广 |
+| 高德地图 | sooyaaabo | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/sooyaaabo/Amap.sgmodule` | 处理首页、搜索热词、路线及导航结束页推广 |
+| 哔哩哔哩 | ddgksf2013 等 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/BiliBiliAds.sgmodule` | 深度处理推荐、直播、搜索、开屏等内容 |
+| 小红书 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/XiaoHongShuAds.sgmodule` | 处理开屏、首页、搜索和活动入口 |
+| 墨迹天气 | fmz200 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Official/MojiWeather.sgmodule` | 处理开屏及部分广告资源 |
+| 百度贴吧 | ddgksf2013 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/TieBaAds.sgmodule` | 处理信息流、热搜及页面广告 |
+| 知乎 | ddgksf2013、blackmatrix7 等 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/zhihu.ads.sgmodule` | 处理推荐、热榜、搜索、回答页及弹窗 |
+| 微信小程序 | Kelee | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/Kelee/Beta/WexinMiniPrograms_Remove_ads.sgmodule` | 覆盖多个常用微信小程序，规则范围较广 |
+| YouTube Enhance | Maasea | `https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodule` | 适用于 YouTube 与 YouTube Music，支持去广告、画中画、后台播放和翻译 |
+| 中国电信 | fmz200 | `https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Beta/ChinaTelecom.sgmodule` | 处理欢迎页、开屏及部分广告请求 |
 
 说明：
 
-- 这一类不是现成的 Surge 模块。
-- 转换后的 Surge 文件保存在本仓库中，便于检查和维护。
-- 当前主要处理墨鱼 `FakeiOSAds` 所覆盖影视 App 的启动与配置广告。
+- `ifflagged / Romeo` 在上表中主要作为 Surge 模块镜像和整理来源，不代表所有规则均由其原创。
+- YouTube 建议直接使用 Maasea 原始模块，不要再通过本项目进行融合。
+- 不建议同时安装功能重复的多个专用模块。
+- 专用模块可能扩大 MITM 范围，安装前应查看模块内容和来源。
 
-## App 覆盖程度
+## 使用前提：MITM / HTTPS 解密
 
-下面的“去广告程度”仅依据当前规则覆盖范围估算，不代表所有 App 版本、地区和账号下都能百分之百生效。
+本模块中的许多规则依赖 Surge 的 MITM。只安装模块但没有安装并信任证书时，HTTPS 重写、脚本和 Map Local 规则可能无法生效。
 
-### 较深度处理
+### Surge Mac 本机
 
-菜鸟、闲鱼、什么值得买、高德地图、哔哩哔哩、小红书、百度贴吧、知乎、微信小程序、YouTube。
+1. 在 Surge Mac 的 HTTPS 解密设置中生成并安装 CA 证书。
+2. 将证书安装到 macOS 系统钥匙串并设为信任。
+3. 开启 HTTPS 解密。
+4. 确认本模块已启用。
 
-### 中等处理
+### 由 Surge Mac 接管的 iPhone / iPad
 
-美团 / 美团外卖、墨迹天气、中国电信、肯德基、百度网盘、顺丰速运、腾讯新闻、网易严选、影视去广告。
+1. 在设备上安装 Surge Mac 提供的 CA 证书。
+2. 进入“设置 → 通用 → VPN 与设备管理”完成安装。
+3. 进入“设置 → 通用 → 关于本机 → 证书信任设置”，开启完全信任。
+4. 确保设备流量实际经过 Surge Mac。
 
-### 基础开屏或启动广告
-
-淘宝、天猫、京东、拼多多、得物、识货、慢慢买、大众点评、滴滴出行、去哪儿旅行、豆瓣、中国移动、铁路 12306、交管 12123、饿了么、飞猪旅行、贝壳找房、大麦、叮咚买菜、盒马、百度地图、夸克、淘票票、猫眼、麦当劳、必胜客、同程旅行、唯品会、中国联通、转转。
+部分银行、支付及使用证书锁定的 App 可能拒绝 MITM。不要随意扩大解密范围。
 
 ## 自动更新方式
 
-GitHub Actions 每天北京时间约 11:17 执行以下流程：
+GitHub Actions 会定期执行：
 
 1. 下载墨鱼 `StartUpAds.conf`；
 2. 提取 `config/apps.json` 中指定的 App；
 3. 将 Quantumult X 规则转换成 Surge 语法；
-4. 下载并合并配置中的 Surge 专用模块；
-5. 合并本仓库维护的本地 Surge 模块；
-6. 生成 `dist/StartUpAds_Selected.sgmodule`；
-7. 只有生成结果发生变化时才提交新版本。
+4. 合并本仓库维护的本地转换模块；
+5. 生成 `dist/StartUpAds_Selected.sgmodule`；
+6. 仅在结果变化时提交新版本。
+
+第三方 Surge 专用模块已改为用户自行安装，不再参与主模块生成。
 
 ## 使用说明
 
 - 首次启用后，建议彻底退出目标 App 再重新打开。
-- 部分 App 会缓存开屏素材，规则已生效时仍可能暂时显示旧广告；清理缓存或重新安装后再测试。
-- 较深度规则可能同时隐藏活动入口、推荐卡片或其他非核心内容。
-- 微信小程序模块覆盖范围较广，如个别小程序功能异常，可先停用本模块排查。
-- YouTube Enhance 来源于 Maasea。由于原模块使用 Surge 模块参数，本仓库合并时固定采用默认参数；YouTube 接口或客户端更新后仍可能暂时失效。
+- App 可能缓存旧开屏素材，可在清理缓存后再次测试。
 - App 更新后接口可能变化，规则可能暂时失效。
-- 不建议将 HTTPS 解密范围扩大到不需要处理的敏感域名。
-- 本项目仅整理、转换和自动合并上游规则，不保证长期兼容，也不对第三方规则或脚本的安全性作担保。
+- 同一 App 不建议同时启用多个功能重复的模块。
+- 出现异常时，先停用对应专用模块，而不是关闭整个主模块。
+- 本项目仅整理、转换和自动更新上游规则，不保证长期兼容。
 
-## 问题反馈与 App 建议
+## 问题反馈
 
-发现规则失效、广告未去除、功能异常，或希望新增其他 App 时，请前往本仓库的 **Issues** 页面提交反馈。
-
-提交时请尽量提供：
+提交问题时请尽量提供：
 
 - App 名称及版本；
 - 设备和系统版本；
 - Surge 版本；
 - 广告出现的位置；
-- 是否已安装并完全信任 MITM 证书；
+- 是否已安装并信任 MITM 证书；
 - 是否已开启 HTTPS 解密；
-- 相关截图，请遮挡账号、手机号、地址等隐私信息。
+- 已启用的相关专用模块；
+- 脱敏后的截图。
 
-请勿上传 Surge 配置、代理节点、订阅链接、证书或其他敏感信息。
+请勿上传代理节点、订阅地址、证书、完整 Surge 配置或其他敏感信息。
 
 ## 上游与致谢
 
@@ -166,10 +143,10 @@ GitHub Actions 每天北京时间约 11:17 执行以下流程：
 
 - ddgksf2013 / 墨鱼规则；
 - ifflagged / Romeo 镜像；
+- Maasea；
 - Kelee；
 - blackmatrix7；
 - sooyaaabo；
-- fmz200；
-- Maasea。
+- fmz200。
 
-感谢各上游作者和贡献者的维护。本仓库仅作个人整理、格式转换与自动合并。
+感谢各上游作者和贡献者的维护。本仓库仅作个人整理、格式转换与自动更新。

@@ -349,66 +349,6 @@
       "name": "影视去广告",
       "url": "https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/modules/FakeiOSAds.sgmodule",
       "required": false
-    },
-    {
-      "name": "闲鱼增强",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/GoofishAds.sgmodule",
-      "required": false
-    },
-    {
-      "name": "菜鸟增强",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/CainiaoAds.sgmodule",
-      "required": false
-    },
-    {
-      "name": "什么值得买",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/SmzdmAds.sgmodule",
-      "required": false
-    },
-    {
-      "name": "高德地图",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/sooyaaabo/Amap.sgmodule",
-      "required": false
-    },
-    {
-      "name": "哔哩哔哩",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/BiliBiliAds.sgmodule",
-      "required": false
-    },
-    {
-      "name": "小红书",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/XiaoHongShuAds.sgmodule",
-      "required": false
-    },
-    {
-      "name": "墨迹天气",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Official/MojiWeather.sgmodule",
-      "required": false
-    },
-    {
-      "name": "百度贴吧",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/TieBaAds.sgmodule",
-      "required": false
-    },
-    {
-      "name": "知乎",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/zhihu.ads.sgmodule",
-      "required": false
-    },
-    {
-      "name": "微信小程序",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/Kelee/Beta/WexinMiniPrograms_Remove_ads.sgmodule",
-      "required": false
-    },
-    {
-      "name": "YouTube Enhance（Maasea）",
-      "url": "https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/modules/YouTube.Enhance.sgmodule",
-      "required": false
-    },
-    {
-      "name": "中国电信",
-      "url": "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Beta/ChinaTelecom.sgmodule",
-      "required": false
     }
   ]
 }
