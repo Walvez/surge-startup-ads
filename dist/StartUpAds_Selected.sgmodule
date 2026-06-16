@@ -3,7 +3,7 @@
 #!author=Walvez + GitHub Actions
 #!homepage=https://github.com/Walvez/surge-startup-ads
 #!category=去广告
-#!date=2026-06-15T09:33:49+00:00
+#!date=2026-06-16T02:12:04+00:00
 
 # Primary source: https://ddgksf2013.top/rewrite/StartUpAds.conf
 # Primary SHA-256: 44774beb8f2701a8d40519e258f32f2a35676654cbb1d43f165df3bad9b78ce6
@@ -57,9 +57,10 @@ https://dynamicad.kfc.com.cn/api/app5/homepage/ai/popup - reject-200
 ^https?:\/\/api\.douban\.com\/v2\/app_ads\/splash - reject-200
 ^https?:\/\/api\.douban\.com\/b.*\/common_ads\?.* - reject-200
 # ===== 百度网盘 / baiduwangpan =====
+^https:\/\/pan\.baidu\.com\/act\/api\/activityentry - reject-dict
+^https:\/\/pan\.baidu\.com\/buy\/ad\/conf\?.*type=splashMode - reject-dict
 ^https?:\/\/pan\.baidu\.com\/act\/v\d\/(bchannel|welfare)\/list - reject-200
 ^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/pcs\/ad - reject-200
-^https?:\/\/pan\.baidu\.com\/act\/api\/activityentry - reject-200
 # ===== 中国移动 / zhongguoyidong =====
 ^https?:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/DN\/init\/startInit - reject-200
 # ===== 中国移动 / zhongguoyidongjiangsu =====
