@@ -274,6 +274,22 @@ def main() -> int:
 
     external_results: list[str] = []
     external_script_counter = [counters["script"]]
+    for module in config.get("local_modules", []):
+        name = module["name"]
+        path = ROOT / module["path"]
+        try:
+            module_text = path.read_text(encoding="utf-8")
+            merge_surge_module(
+                module_text,
+                name,
+                sections,
+                hostnames,
+                external_script_counter,
+            )
+            external_results.append(f"{name}: merged")
+        except Exception as exc:  # noqa: BLE001
+            raise BuildError(f"{name}: local module failed: {path}: {exc}") from exc
+
     for module in config.get("external_modules", []):
         name = module["name"]
         url = module["url"]

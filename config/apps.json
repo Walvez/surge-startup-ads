@@ -360,6 +360,12 @@
       ]
     }
   },
+  "local_modules": [
+    {
+      "name": "广发基金去开屏",
+      "path": "modules/GFFunds.sgmodule"
+    }
+  ],
   "external_modules": [
     {
       "name": "影视去广告",
