@@ -35,7 +35,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 | 餐饮 | 肯德基、麦当劳、必胜客 |
 | 通信服务 | 中国移动、中国联通 |
 | 智能家居与小米服务 | 米家、小米 |
-| 其他 | 菜鸟、贝壳找房、大麦、顺丰速运、浦大喜奔 |
+| 其他 | 菜鸟、贝壳找房、大麦、顺丰速运 |
 
 这部分主要用于开屏、启动页及少量基础广告处理。上游规则更新后，GitHub Actions 会重新提取并转换。
 
@@ -190,6 +190,17 @@ https://raw.githubusercontent.com/Maasea/sgmodule/master/YouTube.Enhance.sgmodul
 
 ```text
 https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/fmz200/Beta/ChinaTelecom.sgmodule
+```
+
+</details>
+
+<details>
+<summary><strong>浦大喜奔</strong> · 奶思 / fmz200</summary>
+
+匹配新版浦大喜奔 `image.spdbccc.com.cn` 上的已知开屏素材。首次启用后可能需要清理 App 缓存或重新安装。
+
+```text
+https://raw.githubusercontent.com/fmz200/wool_scripts/main/Surge/module/split/partP/PuDaXiBen.sgmodule
 ```
 
 </details>
