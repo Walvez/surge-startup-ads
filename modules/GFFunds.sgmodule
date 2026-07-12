@@ -3,7 +3,7 @@
 #!author=Walvez
 
 [URL Rewrite]
-^https:\/\/cdngfwx\.gffunds\.com\.cn\/trade-pic\/app\/pic\/[^?]*_kpios\.(?:jpe?g|png|webp)(?:\?.*)?$ - reject
+^https:\/\/cdngfwx\.gffunds\.com\.cn\/trade-pic\/app\/pic\/[^?]*_(?:kp)?ios\.(?:jpe?g|png|webp)(?:\?.*)?$ - reject
 
 [MITM]
 hostname = %APPEND% cdngfwx.gffunds.com.cn

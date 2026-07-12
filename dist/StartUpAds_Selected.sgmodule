@@ -3,7 +3,7 @@
 #!author=Walvez + GitHub Actions
 #!homepage=https://github.com/Walvez/surge-startup-ads
 #!category=去广告
-#!date=2026-07-12T06:36:55+00:00
+#!date=2026-07-12T10:44:08+00:00
 
 # Primary source: https://ddgksf2013.top/rewrite/StartUpAds.conf
 # Primary SHA-256: 3bdb0684dbde9ab1f24c8655a1675a37c720b86bf2b8c3ca65dba373d096c649
@@ -132,7 +132,7 @@ https://support.you.163.com/appversync/check.do - reject-200
 ^https?:\/\/m\.client\.10010\.com\/uniAdmsInterface\/(getHomePageAd|getWelcomeAd) - reject-200
 # ===== 转转 / zhuanzhuan =====
 ^https?:\/\/app\.zhuanzhuan\.com\/zzx\/transfer\/getConfigInfo - reject-200
-^https:\/\/cdngfwx\.gffunds\.com\.cn\/trade-pic\/app\/pic\/[^?]*_kpios\.(?:jpe?g|png|webp)(?:\?.*)?$ - reject
+^https:\/\/cdngfwx\.gffunds\.com\.cn\/trade-pic\/app\/pic\/[^?]*_(?:kp)?ios\.(?:jpe?g|png|webp)(?:\?.*)?$ - reject
 ^http:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,4}(:\d+)?\/.*?\/v\d\/(version|notice\?|top_notice\?|advert\?position=[^2]+) - reject-200
 
 [Body Rewrite]
