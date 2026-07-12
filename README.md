@@ -35,7 +35,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 | 餐饮 | 肯德基、麦当劳、必胜客 |
 | 通信服务 | 中国移动、中国联通 |
 | 智能家居与小米服务 | 米家、小米 |
-| 其他 | 菜鸟、贝壳找房、大麦、顺丰速运 |
+| 其他 | 菜鸟、贝壳找房、大麦、顺丰速运、浦大喜奔 |
 
 这部分主要用于开屏、启动页及少量基础广告处理。上游规则更新后，GitHub Actions 会重新提取并转换。
 

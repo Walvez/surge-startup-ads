@@ -3,11 +3,11 @@
 #!author=Walvez + GitHub Actions
 #!homepage=https://github.com/Walvez/surge-startup-ads
 #!category=去广告
-#!date=2026-07-12T10:44:08+00:00
+#!date=2026-07-12T11:24:01+00:00
 
 # Primary source: https://ddgksf2013.top/rewrite/StartUpAds.conf
 # Primary SHA-256: 3bdb0684dbde9ab1f24c8655a1675a37c720b86bf2b8c3ca65dba373d096c649
-# Selected apps found: 淘宝, 天猫, 京东, 拼多多, 闲鱼, 得物, 识货, 慢慢买, 美团, 大众点评, 滴滴出行, 去哪儿旅行, 菜鸟, 肯德基, 豆瓣, 百度网盘, 中国移动, 铁路12306, 交管12123, 饿了么, 飞猪旅行, 贝壳找房, 大麦, 叮咚买菜, 盒马, 米家, 小米, 顺丰速运, 百度地图, 夸克, 淘票票, 猫眼, 麦当劳, 必胜客, 同程旅行, 腾讯新闻, 唯品会, 网易严选, 中国联通, 转转
+# Selected apps found: 淘宝, 天猫, 京东, 拼多多, 闲鱼, 得物, 识货, 慢慢买, 美团, 大众点评, 滴滴出行, 去哪儿旅行, 菜鸟, 肯德基, 豆瓣, 百度网盘, 中国移动, 铁路12306, 交管12123, 饿了么, 飞猪旅行, 贝壳找房, 大麦, 叮咚买菜, 盒马, 米家, 小米, 顺丰速运, 百度地图, 夸克, 淘票票, 猫眼, 麦当劳, 必胜客, 同程旅行, 浦大喜奔, 腾讯新闻, 唯品会, 网易严选, 中国联通, 转转
 # Supplemental modules: 广发基金去开屏: merged; 影视去广告: merged
 
 [Rule]
@@ -114,6 +114,8 @@ https://ccsp-egmas.sf-express.com/cx-app-base/base/app/ad/queryAdImages - reject
 ^https?:\/\/res\.pizzahut\.com\.cn\/CRM\/phad\/apphome\/apphome - reject-200
 # ===== 同程旅行 / tongchenglvxing =====
 ^https?:\/\/tcmobileapi\.17usoft\.com\/appindexnew\/index\/getappindexconfig - reject-200
+# ===== 浦大喜奔 / pufayinhang =====
+^https?:\/\/lban\.spdb\.com\.cn\/mspmk-web-component\/(getAdvList|prefetchAdvList)\.ah - reject-200
 # ===== 腾讯新闻 / TencentNews =====
 ^https?:\/\/r\.inews\.qq\.com\/(adsBlacklist|getFullScreenPic|getQQNewsRemoteConfig) - reject-200
 ^https?:\/\/r\.inews\.qq\.com\/(getBannerAds|getNewsRemoteConfig|getSplash|searchHotCatList|upLoadLoc) - reject-200
@@ -150,4 +152,4 @@ http-response-jq ^http:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,4}(:\d+)?\/api\/v\
 夸克_5 = type=http-response, pattern=^https?:\/\/open-cms-api\.(uc|quark)\.cn\/open-cms, requires-body=true, max-size=-1, timeout=60, script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/quark.js
 
 [MITM]
-hostname = %APPEND% guide-acs.m.taobao.com, api.m.jd.com, bdsp-x.jd.com, dsp-x.jd.com, api.pinduoduo.com, api.yangkeduo.com, acs.m.goofish.com, g-acs.m.goofish.com, iyes.youku.com, app.dewu.com, 203.107.1.97, sh-gateway.shihuo.cn, apapia-sqk.manmanbuy.com, peisongapi.meituan.com, *.meituan.com, img.meituan.net, s3plus.meituan.net, flowplus.meituan.net, api-tx.dsocial.xyz, res.xiaojukeji.com, homefront.qunar.com, client.qunar.com, cn-acs.m.cainiao.com, res.kfc.com.cn, dynamicad.kfc.com.cn, api.douban.com, pan.baidu.com, client.app.coc.10086.cn, wap.js.10086.cn, m.sd.10086.cn, gx.10086.cn, api.ahmobile.cn, gd.10086.cn, ad.12306.cn, gab.122.gov.cn, elemecdn.com, fuss10.elemecdn.com, acs.m.taobao.com, apps.api.ke.com, maicai.api.ddxq.mobi, acs-m.freshippo.com, home.mi.com, api.m.mi.com, ccsp-egmas.sf-express.com, shopic.sf-express.com, newclient.map.baidu.com, open-cms-api.uc.cn, open-cms-api.quark.cn, p0.pipi.cn, vod.pipi.cn, api.mcd.cn, res.pizzahut.com.cn, tcmobileapi.17usoft.com, r.inews.qq.com, mapi.appvipshop.com, b.appsimg.com, support.you.163.com, m.you.163.com, yanxuan.nosdn.127.net, m.client.10010.com, app.zhuanzhuan.com, cdngfwx.gffunds.com.cn, app.dsx.ac
+hostname = %APPEND% guide-acs.m.taobao.com, api.m.jd.com, bdsp-x.jd.com, dsp-x.jd.com, api.pinduoduo.com, api.yangkeduo.com, acs.m.goofish.com, g-acs.m.goofish.com, iyes.youku.com, app.dewu.com, 203.107.1.97, sh-gateway.shihuo.cn, apapia-sqk.manmanbuy.com, peisongapi.meituan.com, *.meituan.com, img.meituan.net, s3plus.meituan.net, flowplus.meituan.net, api-tx.dsocial.xyz, res.xiaojukeji.com, homefront.qunar.com, client.qunar.com, cn-acs.m.cainiao.com, res.kfc.com.cn, dynamicad.kfc.com.cn, api.douban.com, pan.baidu.com, client.app.coc.10086.cn, wap.js.10086.cn, m.sd.10086.cn, gx.10086.cn, api.ahmobile.cn, gd.10086.cn, ad.12306.cn, gab.122.gov.cn, elemecdn.com, fuss10.elemecdn.com, acs.m.taobao.com, apps.api.ke.com, maicai.api.ddxq.mobi, acs-m.freshippo.com, home.mi.com, api.m.mi.com, ccsp-egmas.sf-express.com, shopic.sf-express.com, newclient.map.baidu.com, open-cms-api.uc.cn, open-cms-api.quark.cn, p0.pipi.cn, vod.pipi.cn, api.mcd.cn, res.pizzahut.com.cn, tcmobileapi.17usoft.com, lban.spdb.com.cn, r.inews.qq.com, mapi.appvipshop.com, b.appsimg.com, support.you.163.com, m.you.163.com, yanxuan.nosdn.127.net, m.client.10010.com, app.zhuanzhuan.com, cdngfwx.gffunds.com.cn, app.dsx.ac
