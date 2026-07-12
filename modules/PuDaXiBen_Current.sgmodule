@@ -1,0 +1,9 @@
+#!name=浦大喜奔开屏补充
+#!desc=拦截经实机抓包确认、但上游模块尚未覆盖的浦大喜奔开屏素材
+#!author=Walvez
+
+[Map Local]
+^https?:\/\/image\.spdbccc\.com\.cn\/group\d\/M00\/[A-Z0-9]{2}\/[A-Z0-9]{2}\/[^?]*E798\.JPG(?:\?.*)?$ data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+
+[MITM]
+hostname = %APPEND% image.spdbccc.com.cn

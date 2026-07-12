@@ -45,6 +45,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 |---|---|---|---|
 | 影视去广告 | ddgksf2013 `FakeiOSAds.conf` | Quantumult X `.conf` | 由本仓库转换为 `modules/FakeiOSAds.sgmodule`，再合并进主模块 |
 | 广发基金去开屏 | 本仓库根据实机请求维护 | Surge `.sgmodule` | 仅拦截 `trade-pic/app/pic/` 下带 `_ios` 或 `_kpios` 后缀的 iOS 开屏图片 |
+| 浦大喜奔开屏补充 | 本仓库根据实机请求维护 | Surge `.sgmodule` | 补充拦截上游模块尚未覆盖、经实机确认的开屏素材 |
 
 当前主模块只包含以上两类内容。
 

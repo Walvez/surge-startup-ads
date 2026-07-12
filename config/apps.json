@@ -364,6 +364,10 @@
     {
       "name": "广发基金去开屏",
       "path": "modules/GFFunds.sgmodule"
+    },
+    {
+      "name": "浦大喜奔开屏补充",
+      "path": "modules/PuDaXiBen_Current.sgmodule"
     }
   ],
   "external_modules": [
