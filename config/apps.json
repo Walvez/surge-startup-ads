@@ -368,6 +368,10 @@
     {
       "name": "浦大喜奔开屏补充",
       "path": "modules/PuDaXiBen_Current.sgmodule"
+    },
+    {
+      "name": "医考帮去开屏",
+      "path": "modules/YiKaoBang.sgmodule"
     }
   ],
   "external_modules": [
