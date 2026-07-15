@@ -3,7 +3,7 @@
 #!author=Walvez + GitHub Actions
 #!homepage=https://github.com/Walvez/surge-startup-ads
 #!category=去广告
-#!date=2026-07-15T00:13:48+00:00
+#!date=2026-07-15T02:08:46+00:00
 
 # Primary source: https://ddgksf2013.top/rewrite/StartUpAds.conf
 # Primary SHA-256: 3bdb0684dbde9ab1f24c8655a1675a37c720b86bf2b8c3ca65dba373d096c649
@@ -151,7 +151,7 @@ http-response-jq ^http:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,4}(:\d+)?\/api\/v\
 顺丰速运_3 = type=http-response, pattern=https://ccsp-egmas.sf-express.com/cx-app-base/base/app/ad/queryInfoFlow, requires-body=true, max-size=-1, timeout=60, script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/refs/heads/master/shunfeng_json.js
 百度地图_4 = type=http-response, pattern=^https:\/\/newclient\.map\.baidu\.com\/client\/phpui2\/\?qt=ads, requires-body=true, max-size=-1, timeout=60, script-path=https://raw.githubusercontent.com/app2smile/rules/master/js/baidumap.js
 夸克_5 = type=http-response, pattern=^https?:\/\/open-cms-api\.(uc|quark)\.cn\/open-cms, requires-body=true, max-size=-1, timeout=60, script-path=https://raw.githubusercontent.com/ddgksf2013/Scripts/master/quark.js
-医考帮去开屏_6 = type=http-response, pattern=^https:\/\/api\.yikaobang\.com\.cn\/index\.php\/client\/[Mm]ain\/startPage(?:\?|$), requires-body=true, max-size=-1, timeout=10, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/scripts/yikaobang-start-page.js
+医考帮去开屏_6 = type=http-response, pattern=^https:\/\/api\.yikaobang\.com\.cn\/index\.php\/client\/[Mm]ain\/(?:startPage|ads)(?:\?|$), requires-body=true, max-size=-1, timeout=10, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/scripts/yikaobang-start-page.js
 
 [MITM]
 hostname = %APPEND% guide-acs.m.taobao.com, api.m.jd.com, bdsp-x.jd.com, dsp-x.jd.com, api.pinduoduo.com, api.yangkeduo.com, acs.m.goofish.com, g-acs.m.goofish.com, iyes.youku.com, app.dewu.com, 203.107.1.97, sh-gateway.shihuo.cn, apapia-sqk.manmanbuy.com, peisongapi.meituan.com, *.meituan.com, img.meituan.net, s3plus.meituan.net, flowplus.meituan.net, api-tx.dsocial.xyz, res.xiaojukeji.com, homefront.qunar.com, client.qunar.com, cn-acs.m.cainiao.com, res.kfc.com.cn, dynamicad.kfc.com.cn, api.douban.com, pan.baidu.com, client.app.coc.10086.cn, wap.js.10086.cn, m.sd.10086.cn, gx.10086.cn, api.ahmobile.cn, gd.10086.cn, ad.12306.cn, gab.122.gov.cn, elemecdn.com, fuss10.elemecdn.com, acs.m.taobao.com, apps.api.ke.com, maicai.api.ddxq.mobi, acs-m.freshippo.com, home.mi.com, api.m.mi.com, ccsp-egmas.sf-express.com, shopic.sf-express.com, newclient.map.baidu.com, open-cms-api.uc.cn, open-cms-api.quark.cn, p0.pipi.cn, vod.pipi.cn, api.mcd.cn, res.pizzahut.com.cn, tcmobileapi.17usoft.com, r.inews.qq.com, mapi.appvipshop.com, b.appsimg.com, support.you.163.com, m.you.163.com, yanxuan.nosdn.127.net, m.client.10010.com, app.zhuanzhuan.com, cdngfwx.gffunds.com.cn, image.spdbccc.com.cn, api.yikaobang.com.cn, app.dsx.ac
