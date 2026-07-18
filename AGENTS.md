@@ -1,130 +1,112 @@
 # AGENTS.md
 
 ## Project identity
+
 Repository: `Walvez/surge-startup-ads`
 
-Purpose: maintain a curated Surge startup-ad module generated from selected rules in ddgksf2013/Moyu `StartUpAds.conf`, plus a very small number of repository-owned local conversions.
+Purpose: maintain a full Surge conversion of ddgksf2013/Moyu `StartUpAds.conf`, plus a very small number of repository-owned local fixes.
 
-Primary output:
+Primary output and compatibility subscription:
+
 ```text
 dist/StartUpAds_Selected.sgmodule
-```
-
-Subscription:
-```text
 https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_Selected.sgmodule
 ```
 
+The historical `Selected` filename is retained to avoid breaking existing subscriptions. The generated content is full, not selected.
+
 ## Architecture rules
+
 The generated main module may contain only:
-1. selected Moyu `StartUpAds.conf` conversions;
-2. repository-owned local conversion modules, currently including `modules/FakeiOSAds.sgmodule`.
+
+1. all active Moyu `StartUpAds.conf` conversions and upstream MITM hostnames;
+2. repository-owned local overrides and modules, including `modules/FakeiOSAds.sgmodule`.
 
 Do not merge third-party native Surge modules into the main output. Document them in `README.md` as optional independent installs.
 
 ## Read before editing
+
 1. `AGENTS.md`
 2. `docs/PROJECT_CONTEXT.md`
 3. `docs/MAINTENANCE.md`
-4. `config/apps.json`
+4. `config/build.json`
 5. `scripts/convert.py`
 6. `.github/workflows/`
 7. `README.md`
 
 Treat current repository files as authoritative.
 
-## Adding an app from Moyu
-1. Fetch the current upstream source.
-2. Confirm the exact marker, such as `# > mijia`.
-3. Read the whole block until the next marker.
-4. Identify only required MITM hostnames.
-5. Add one entry to `config/apps.json`.
-6. Regenerate output.
-7. Verify expected rules and hostnames.
-8. Update README app lists.
+## Upstream conversion
 
-Example:
-```json
-"米家": {
-  "markers": ["mijia"],
-  "hostnames": ["home.mi.com"]
-}
-```
+- Do not maintain an App allowlist.
+- Fetch the current upstream source and confirm it is config text, not HTML.
+- Convert every `# > marker` block and deduplicate the complete upstream hostname list.
+- Unknown upstream syntax must fail the build; never silently skip it.
+- Add an offline fixture and unit test for every newly supported syntax.
+- Use upstream `@UpdateTime` for `#!date`; do not use wall-clock build time.
+
+## Repository-owned fixes
+
+- Use `local_overrides` in `config/build.json` for removals/replacements.
+- Use `local_modules` for repository-owned Surge modules.
+- Read local modules from this checkout. Do not fetch this repository's own `main` branch as an external module.
+- Check `quantumultx/StartUpAds_Local.conf` when a local rule also applies to Quantumult X.
 
 ## Optional native Surge modules
-Keep them out of `external_modules` unless the user explicitly reverses the current architecture.
 
-Use README collapsible blocks:
-```md
-<details>
-<summary><strong>Module name</strong> · Author</summary>
-
-Short description.
-
-```text
-https://example.com/module.sgmodule
-```
-
-</details>
-```
-
-Do not place long raw URLs in markdown tables.
-
-## Attribution
-Always distinguish original author, mirror/aggregator, and this repository's conversion role. Do not credit `ifflagged/Romeo` as original author when it is only a mirror.
+Keep third-party native modules out of the generator. Use README collapsible blocks with the original author distinguished from mirrors/aggregators. Do not place long raw URLs in markdown tables.
 
 ## Surge syntax safety
-Preserve exact quoting and escaping, especially:
-- `argument=`
-- regex escapes
-- `binary-body-mode`
-- `requires-body`
-- `[MITM] hostname`
-- `%APPEND%`
+
+Preserve exact quoting and escaping, especially `argument=`, regex escapes, `binary-body-mode`, `requires-body`, `[MITM] hostname`, and `%APPEND%`.
 
 Known historical bug:
+
 ```text
 argument={"key":"value"}
 ```
+
 did not work correctly, while the original quoted form did.
 
-Check for unresolved placeholders:
-```bash
-grep -n "{{{" dist/StartUpAds_Selected.sgmodule
-```
-
 ## MITM policy
-Keep MITM scope minimal. Never use `hostname = *`. Do not add unrelated wildcard, bank, payment, or securities domains.
+
+Full conversion intentionally inherits the upstream MITM scope, including wildcards, IPs, and finance-related domains. Never use `hostname = *`. Document the risk and use narrow App-specific compatibility fixes for confirmed regressions.
 
 ## README policy
+
 - mobile-friendly;
 - no wide tables with long URLs;
 - optional modules use `<details>`;
 - install URLs use fenced `text` blocks;
-- explain MITM;
+- explain full-conversion MITM scope;
 - warn against duplicate modules.
 
 ## Validation
+
 Before committing:
+
 ```bash
 git status --short
-python3 -m json.tool config/apps.json >/dev/null
+python3 -m json.tool config/build.json >/dev/null
+python3 -m unittest discover -s tests -v
 python3 scripts/convert.py --help
-# run the same converter command used by GitHub Actions
+python3 scripts/convert.py --dry-run
+python3 scripts/convert.py
 git diff --check
 ```
 
 Verify:
-- output is non-empty;
-- expected app marker/rule exists;
-- expected hostname exists;
-- optional native modules are absent from the main output;
+
+- output is non-empty and reports hundreds of upstream blocks/rules;
+- current upstream builds with zero unsupported syntax;
+- expected local overrides and modules exist;
+- complete upstream and local hostnames are merged without `hostname = *`;
+- no unresolved placeholders or duplicate script names;
 - README links are correct;
-- no unresolved placeholders;
-- no duplicate script names;
 - no accidental unrelated deletions.
 
 ## Git workflow
+
 ```bash
 git pull --rebase origin main
 git status --short
@@ -139,11 +121,5 @@ Use `feat:`, `fix:`, `docs:`, `refactor:`, or `chore:`. Never force-push.
 README-only changes do not require regeneration. Changes to config, local modules, converter, workflow, or generated output do.
 
 ## Reporting
-Respond in Chinese. For each task report:
-1. what changed;
-2. changed files;
-3. validation;
-4. whether GitHub Actions must run;
-5. remaining uncertainty.
 
-Do not claim success without validation evidence.
+Respond in Chinese. Report what changed, changed files, validation evidence, whether GitHub Actions must run, and remaining uncertainty. Do not claim success without evidence.

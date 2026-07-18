@@ -1,6 +1,24 @@
-name: Update selected Surge startup-ad module
+name: Build full Surge startup-ad module
 
 on:
+  pull_request:
+    paths:
+      - "config/**"
+      - "modules/**"
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/**"
+      - "dist/StartUpAds_Selected.sgmodule"
+  push:
+    branches:
+      - main
+    paths:
+      - "config/**"
+      - "modules/**"
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/**"
+      - "dist/StartUpAds_Selected.sgmodule"
   workflow_dispatch:
   schedule:
     - cron: "17 3 * * *"
@@ -9,11 +27,11 @@ permissions:
   contents: write
 
 concurrency:
-  group: update-startup-ads
+  group: build-startup-ads-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  update:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -26,24 +44,39 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Build Surge module
-        run: python scripts/convert.py
+      - name: Validate configuration and tests
+        run: |
+          python -m json.tool config/build.json >/dev/null
+          python -m unittest discover -s tests -v
+          python scripts/convert.py --help >/dev/null
 
-      - name: Apply repository-maintained overrides
-        run: python scripts/apply_local_overrides.py
+      - name: Build full Surge module
+        run: python scripts/convert.py
 
       - name: Validate generated file
         run: |
           test -s dist/StartUpAds_Selected.sgmodule
-          grep -q '^#!name=' dist/StartUpAds_Selected.sgmodule
-          grep -q '^\[MITM\]' dist/StartUpAds_Selected.sgmodule
-          grep -Fq '^https:\/\/pan\.baidu\.com\/act\/api\/activityentry - reject-dict' dist/StartUpAds_Selected.sgmodule
+          grep -q '^#!name=墨鱼去开屏 · Surge 全量转换$' dist/StartUpAds_Selected.sgmodule
+          grep -Eq '^# Upstream blocks: [3-9][0-9]{2}$' dist/StartUpAds_Selected.sgmodule
+          grep -Eq '^# Upstream rules converted: [4-9][0-9]{2}$' dist/StartUpAds_Selected.sgmodule
+          grep -q '^\[MITM\]$' dist/StartUpAds_Selected.sgmodule
+          grep -Fq 'www1.elecfans.com' dist/StartUpAds_Selected.sgmodule
+          grep -Fq 'modules/FakeiOSAds.sgmodule' config/build.json
+          grep -Fq 'app.dsx.ac' dist/StartUpAds_Selected.sgmodule
           grep -Fq '^https:\/\/pan\.baidu\.com\/buy\/ad\/conf\?.*type=splashMode - reject-dict' dist/StartUpAds_Selected.sgmodule
-          grep -Fq 'ecmob\.cifm\.com\/mall-fundcustom-server\/adinfo\/queryAdInfo' dist/StartUpAds_Selected.sgmodule
+          grep -Fq 'scripts/yikaobang-start-page.js' dist/StartUpAds_Selected.sgmodule
           grep -Fq 'scripts/jpmorgan-startup-ad.js' dist/StartUpAds_Selected.sgmodule
-          grep -Fq 'ecmob.cifm.com' dist/StartUpAds_Selected.sgmodule
+          if grep -n '{{{' dist/StartUpAds_Selected.sgmodule; then exit 1; fi
+          if grep -q '^hostname = \*\s*$' dist/StartUpAds_Selected.sgmodule; then exit 1; fi
+          test -z "$(awk '/^\[Script\]/{inside=1;next} /^\[/{inside=0} inside && /^[^#[:space:]].*=/{sub(/[[:space:]]*=.*/,"",$0); print}' dist/StartUpAds_Selected.sgmodule | sort | uniq -d)"
+          git diff --check
+
+      - name: Require committed artifact in pull requests
+        if: github.event_name == 'pull_request'
+        run: git diff --exit-code -- dist/StartUpAds_Selected.sgmodule
 
       - name: Commit updated module
+        if: github.event_name != 'pull_request'
         run: |
           if git diff --quiet -- dist/StartUpAds_Selected.sgmodule; then
             echo "No upstream changes."
@@ -52,5 +85,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add dist/StartUpAds_Selected.sgmodule
-          git commit -m "chore: update selected startup-ad module"
+          git commit -m "chore: update full startup-ad module"
           git push

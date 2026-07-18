@@ -1,10 +1,10 @@
-# Surge 精选 App 去开屏模块
+# 墨鱼去开屏 · Surge 全量转换
 
-本项目将墨鱼 `StartUpAds.conf` 中指定 App 的 Quantumult X 重写规则自动转换为 Surge 模块，并额外合并本仓库自行维护的少量转换模块。
+本项目将墨鱼 `StartUpAds.conf` 中的全部 Quantumult X 重写规则自动转换为 Surge 模块，并额外合并本仓库自行维护的少量补丁。上游新增 App 后不需要再手动加入白名单，下次自动构建会直接纳入。
 
 为了便于维护和排查，本项目不再把多个第三方 Surge 专用模块全部融合进同一个文件。深度去广告模块改为在 README 中单独推荐，由用户按需安装。
 
-最终生成文件：
+最终生成文件如下。文件名中的 `Selected` 为兼容旧订阅保留，内容已经是全量转换：
 
 ```text
 dist/StartUpAds_Selected.sgmodule
@@ -30,25 +30,13 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/quantumultx/Star
 
 ## 当前主模块包含什么
 
-### 1. 墨鱼 StartUpAds 主配置转换
+### 1. 墨鱼 StartUpAds 全量转换
 
-以下 App 的规则来自 `ddgksf2013 / 墨鱼` 的 `StartUpAds.conf`。
+主模块会遍历 `ddgksf2013 / 墨鱼` 当前 `StartUpAds.conf` 的全部 `# > marker` 规则块，不再维护 App 白名单。
 
-上游原始格式为 **Quantumult X 重写语法**，本仓库的 `scripts/convert.py` 会自动提取指定 App，并转换为 Surge 的 `[Rule]`、`[URL Rewrite]`、`[Body Rewrite]`、`[Script]`、`[Map Local]` 和 `[MITM]` 等区块。
+上游原始格式为 **Quantumult X 重写语法**，`scripts/convert.py` 会严格转换为 Surge 的 `[Rule]`、`[URL Rewrite]`、`[Body Rewrite]`、`[Script]`、`[Map Local]` 和 `[MITM]` 等区块。发现未知语法时构建会失败，不会静默漏掉规则。
 
-| 分类 | App |
-|---|---|
-| 电商与购物 | 淘宝、天猫、京东、拼多多、闲鱼、得物、识货、慢慢买、唯品会、转转 |
-| 外卖与生活 | 美团、美团外卖、大众点评、饿了么、叮咚买菜、盒马 |
-| 出行与交通 | 滴滴出行、去哪儿旅行、飞猪旅行、铁路 12306、交管 12123、同程旅行 |
-| 文娱与内容 | 豆瓣、腾讯新闻、百度网盘、百度地图、夸克、淘票票、猫眼、网易严选 |
-| 餐饮 | 肯德基、麦当劳、必胜客 |
-| 通信服务 | 中国移动、中国联通 |
-| 金融服务 | 浦大喜奔 |
-| 智能家居与小米服务 | 米家、小米 |
-| 其他 | 菜鸟、贝壳找房、大麦、顺丰速运 |
-
-这部分主要用于开屏、启动页及少量基础广告处理。上游规则更新后，GitHub Actions 会重新提取并转换。
+这部分主要用于开屏、启动页及少量基础广告处理。生成文件头部会记录上游 SHA-256、规则块数量、转换规则数量和 MITM hostname 数量，便于核对更新。
 
 ### 2. 本仓库单独转换的模块
 
@@ -60,7 +48,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/quantumultx/Star
 | 医考帮去广告 | 本仓库根据实机抓包维护 | Surge `.sgmodule` | 清除开屏、启动弹窗、首页浮窗及横幅广告数据，保留接口结构和其他配置 |
 | 摩根资产管理去开屏 | 本仓库根据实机抓包维护 | Surge `.sgmodule` | 仅清空原生启动请求中的开屏广告数组，不影响同接口的首页广告位 |
 
-当前主模块只包含以上两类内容。
+当前主模块只包含墨鱼全量转换和以上仓库自有补丁。其他第三方 Surge 原生模块仍保持独立安装。
 
 ## 可选的 Surge 专用模块
 
@@ -244,18 +232,19 @@ https://raw.githubusercontent.com/fmz200/wool_scripts/main/Surge/module/split/pa
 3. 进入“设置 → 通用 → 关于本机 → 证书信任设置”，开启完全信任。
 4. 确保设备流量实际经过 Surge Mac。
 
-部分银行、支付及使用证书锁定的 App 可能拒绝 MITM。不要随意扩大解密范围。
+全量转换会继承墨鱼配置中的完整 MITM 列表，其中包含通配域名、IP，以及银行、证券、基金等相关域名。部分银行、支付及使用证书锁定的 App 可能拒绝 MITM；如果某个 App 出现联网或登录异常，应先停用本主模块验证，再反馈具体 App 和脱敏日志。
 
 ## 自动更新方式
 
 GitHub Actions 会定期执行：
 
 1. 下载墨鱼 `StartUpAds.conf`；
-2. 提取 `config/apps.json` 中指定的 App；
-3. 将 Quantumult X 规则转换成 Surge 语法；
-4. 合并本仓库维护的本地转换模块；
-5. 生成 `dist/StartUpAds_Selected.sgmodule`；
-6. 仅在结果变化时提交新版本。
+2. 遍历全部上游 marker 和 MITM hostname；
+3. 严格转换 Quantumult X 规则；
+4. 应用仓库本地覆盖并合并本地模块；
+5. 运行离线测试和产物校验；
+6. 生成兼容旧订阅路径的 `dist/StartUpAds_Selected.sgmodule`；
+7. 仅在规则内容或上游版本变化时提交新版本。
 
 第三方 Surge 专用模块已改为用户自行安装，不再参与主模块生成。
 
@@ -265,7 +254,7 @@ GitHub Actions 会定期执行：
 - App 可能缓存旧开屏素材，可在清理缓存后再次测试。
 - App 更新后接口可能变化，规则可能暂时失效。
 - 同一 App 不建议同时启用多个功能重复的模块。
-- 出现异常时，先停用对应专用模块，而不是关闭整个主模块。
+- 全量主模块启用后若某个 App 出现异常，先停用主模块确认是否由转换规则引起，再提交针对该 App 的兼容修复。
 - 本项目仅整理、转换和自动更新上游规则，不保证长期兼容。
 
 ## 问题反馈

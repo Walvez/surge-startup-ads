@@ -1,8 +1,8 @@
 # Common Codex Prompts
 
-## 添加 App
+## 检查新 App
 ```text
-检查墨鱼最新 StartUpAds.conf 是否包含【APP 名称】。有的话确认精确 marker、完整规则块和必要 MITM hostname；加入 config/apps.json，更新 README，按现有流程重新生成 dist 并验证。不要加入同品牌的其他 App，除非我明确要求。先不要 push。
+检查墨鱼最新 StartUpAds.conf 是否包含【APP 名称】，并确认全量 Surge 产物已自动包含对应 marker、完整规则和 MITM hostname。若出现未知语法，补充转换器和离线测试；不要增加 App 白名单。先不要 push。
 ```
 
 ## 替换推荐模块

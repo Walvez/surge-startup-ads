@@ -1,0 +1,44 @@
+{
+  "source_urls": [
+    "https://ddgksf2013.top/rewrite/StartUpAds.conf",
+    "https://raw.githubusercontent.com/ifflagged/Romeo/main/Modules/Surge/ddgksf2013/Official/StartUpAds.conf"
+  ],
+  "conversion_mode": "all",
+  "strict_upstream_syntax": true,
+  "local_overrides": [
+    {
+      "name": "百度网盘本地覆盖",
+      "section": "URL Rewrite",
+      "remove_contains": [
+        "pan\\.baidu\\.com\\/act\\/api\\/activityentry",
+        "pan\\.baidu\\.com\\/buy\\/ad\\/conf"
+      ],
+      "lines": [
+        "^https:\\/\\/pan\\.baidu\\.com\\/act\\/api\\/activityentry - reject-dict",
+        "^https:\\/\\/pan\\.baidu\\.com\\/buy\\/ad\\/conf\\?.*type=splashMode - reject-dict"
+      ]
+    }
+  ],
+  "local_modules": [
+    {
+      "name": "影视去广告",
+      "path": "modules/FakeiOSAds.sgmodule"
+    },
+    {
+      "name": "广发基金去开屏",
+      "path": "modules/GFFunds.sgmodule"
+    },
+    {
+      "name": "浦大喜奔开屏补充",
+      "path": "modules/PuDaXiBen_Current.sgmodule"
+    },
+    {
+      "name": "医考帮去开屏",
+      "path": "modules/YiKaoBang.sgmodule"
+    },
+    {
+      "name": "摩根资产管理去开屏",
+      "path": "modules/JPMorganAssetManagement.sgmodule"
+    }
+  ]
+}

@@ -1,88 +1,64 @@
 # Maintenance Guide
 
-## Add an app from Moyu
+## Routine validation
 
-Fetch upstream:
 ```bash
-curl -L 'https://ddgksf2013.top/rewrite/StartUpAds.conf' -o /tmp/StartUpAds.conf
-grep -n -i '# > marker\|keyword' /tmp/StartUpAds.conf
-```
-
-Read from the marker to the next `# >` marker.
-
-Add a minimal `config/apps.json` entry:
-```json
-"米家": {
-  "markers": ["mijia"],
-  "hostnames": ["home.mi.com"]
-}
-```
-
-Validate JSON:
-```bash
-python3 -m json.tool config/apps.json >/dev/null
-```
-
-Inspect converter/workflow:
-```bash
+git status --short
+python3 -m json.tool config/build.json >/dev/null
+python3 -m unittest discover -s tests -v
 python3 scripts/convert.py --help
-ls .github/workflows
-```
-
-Use the same generation command as GitHub Actions.
-
-Verify:
-```bash
-grep -n -i 'marker\|hostname' dist/StartUpAds_Selected.sgmodule
-grep -n '{{{' dist/StartUpAds_Selected.sgmodule
+python3 scripts/convert.py --dry-run
+python3 scripts/convert.py
 git diff --check
 ```
 
-Update README category list.
+`--help` is side-effect free. `--dry-run` fetches and fully validates the current upstream but does not write the output. The plain command is the same generation command used by GitHub Actions.
 
-## Replace an optional recommendation
-1. Verify original maintainer and direct link.
-2. Replace only the relevant README `<details>` block.
-3. Update attribution.
-4. Keep it out of `external_modules`.
-5. README-only change: no workflow run needed.
+For an offline converter check:
+
+```bash
+python3 scripts/convert.py \
+  --source-file tests/fixtures/StartUpAds.sample.conf \
+  --dry-run
+```
+
+## Upstream changes
+
+No App allowlist is maintained. New upstream markers are converted automatically.
+
+When a build fails after an upstream update:
+
+1. confirm the downloaded response is real config text, not HTML;
+2. identify the exact marker and unsupported rule;
+3. add a narrowly scoped conversion with an offline test;
+4. regenerate and inspect the affected Surge section and MITM hostname;
+5. do not weaken strict mode or silently skip the rule.
+
+## Repository-owned fixes
+
+Use `local_overrides` in `config/build.json` when an upstream rule must be removed or replaced. Use `local_modules` for repository-owned Surge modules. Keep local modules in the checkout; never fetch this repository's own `main` branch through `external_modules`.
+
+When a local rule is applicable to Quantumult X, also inspect `quantumultx/StartUpAds_Local.conf` for parity. That file remains a standalone QX rewrite resource and is not part of the Surge generator.
 
 ## Diagnose a module
+
 Check:
+
 1. duplicate enabled modules;
 2. MITM certificate and hostname;
 3. HTTP/2 MITM requirement;
 4. script execution logs;
-5. `pattern`;
-6. `binary-body-mode`;
-7. `requires-body`;
-8. exact `argument=` quoting;
-9. unresolved placeholders;
-10. cached ads;
-11. whether original upstream works alone.
+5. `pattern` and rule order;
+6. `binary-body-mode` and `requires-body`;
+7. exact `argument=` quoting;
+8. unresolved placeholders;
+9. cached ads;
+10. whether original upstream works alone.
 
-## README layout
-Use:
-```md
-<details>
-<summary><strong>Name</strong> · Author</summary>
+For a full-build regression, first disable the main module and confirm the affected App recovers. Then add the narrowest compatible exclusion or override instead of returning to an App allowlist.
 
-Description.
+## Optional recommendations
 
-```text
-URL
-```
+Verify the original maintainer and direct link, keep optional modules out of the generator, and use README `<details>` blocks with URLs in fenced `text` blocks.
 
-</details>
-```
-
-## Routine update
-```bash
-git pull --rebase origin main
-python3 scripts/convert.py --help
-# run repository's actual generation command
-git diff --check
-git status --short
-```
-
-Review large rule deletions carefully. Do not blindly commit upstream breakage.
+Review large upstream rule or hostname deletions carefully. Never blindly commit them.
