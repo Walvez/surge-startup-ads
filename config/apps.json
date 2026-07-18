@@ -149,6 +149,14 @@
         "pan.baidu.com"
       ]
     },
+    "浦大喜奔": {
+      "markers": [
+        "pufayinhang"
+      ],
+      "hostnames": [
+        "lban.spdb.com.cn"
+      ]
+    },
     "中国移动": {
       "markers": [
         "zhongguoyidong",

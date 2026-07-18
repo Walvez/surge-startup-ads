@@ -26,7 +26,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/quantumultx/StartUpAds_Local.conf
 ```
 
-在 Quantumult X 的“重写资源”中添加并启用即可。摩根资产管理规则仅处理原生启动请求，不影响同一接口承载的首页广告位。
+在 Quantumult X 的“重写资源”中添加并启用即可。该补充重写不会重复加入墨鱼当前配置中已有的百度网盘 `activityentry` 规则；医考帮规则会保留接口结构和其他配置，清除开屏、启动弹窗、首页浮窗及横幅广告数据；摩根资产管理规则仅处理原生启动请求，不影响同一接口承载的首页广告位。
 
 ## 当前主模块包含什么
 
@@ -44,6 +44,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/quantumultx/Star
 | 文娱与内容 | 豆瓣、腾讯新闻、百度网盘、百度地图、夸克、淘票票、猫眼、网易严选 |
 | 餐饮 | 肯德基、麦当劳、必胜客 |
 | 通信服务 | 中国移动、中国联通 |
+| 金融服务 | 浦大喜奔 |
 | 智能家居与小米服务 | 米家、小米 |
 | 其他 | 菜鸟、贝壳找房、大麦、顺丰速运 |
 
@@ -56,7 +57,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/quantumultx/Star
 | 影视去广告 | ddgksf2013 `FakeiOSAds.conf` | Quantumult X `.conf` | 由本仓库转换为 `modules/FakeiOSAds.sgmodule`，再合并进主模块 |
 | 广发基金去开屏 | 本仓库根据实机请求维护 | Surge `.sgmodule` | 仅拦截 `trade-pic/app/pic/` 下带 `_ios` 或 `_kpios` 后缀的 iOS 开屏图片 |
 | 浦大喜奔开屏补充 | 本仓库根据实机请求维护 | Surge `.sgmodule` | 补充拦截上游模块尚未覆盖、经实机确认的开屏素材 |
-| 医考帮去开屏 | 本仓库根据实机抓包维护 | Surge `.sgmodule` | 仅删除启动配置响应中的 `boot_page` 对象，保留同一接口的其他数据 |
+| 医考帮去广告 | 本仓库根据实机抓包维护 | Surge `.sgmodule` | 清除开屏、启动弹窗、首页浮窗及横幅广告数据，保留接口结构和其他配置 |
 | 摩根资产管理去开屏 | 本仓库根据实机抓包维护 | Surge `.sgmodule` | 仅清空原生启动请求中的开屏广告数组，不影响同接口的首页广告位 |
 
 当前主模块只包含以上两类内容。
