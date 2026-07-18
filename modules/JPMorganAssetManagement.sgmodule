@@ -1,0 +1,9 @@
+#!name=摩根资产管理去开屏
+#!desc=清空摩根资产管理 iOS App 原生启动请求返回的开屏广告，不影响同接口的首页广告位
+#!author=Walvez
+
+[Script]
+摩根资产管理去开屏 = type=http-response, pattern=^https:\/\/ecmob\.cifm\.com\/mall-fundcustom-server\/adinfo\/queryAdInfo(?:\?|$), requires-body=true, max-size=-1, timeout=10, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/scripts/jpmorgan-startup-ad.js
+
+[MITM]
+hostname = %APPEND% ecmob.cifm.com

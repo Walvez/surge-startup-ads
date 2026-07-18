@@ -18,6 +18,16 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 
 在 Surge 中选择“从 URL 安装模块”，粘贴以上地址并启用。
 
+### Quantumult X 本地补充重写
+
+如果 Quantumult X 已经启用 `ddgksf2013 / 墨鱼` 的 `StartUpAds.conf`，可以再添加以下重写订阅，用于补充当前上游尚未覆盖的百度网盘 `splashMode`、广发基金 iOS 开屏图片、浦大喜奔当前开屏素材、医考帮和摩根资产管理开屏广告：
+
+```text
+https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/quantumultx/StartUpAds_Local.conf
+```
+
+在 Quantumult X 的“重写资源”中添加并启用即可。摩根资产管理规则仅处理原生启动请求，不影响同一接口承载的首页广告位。
+
 ## 当前主模块包含什么
 
 ### 1. 墨鱼 StartUpAds 主配置转换
@@ -47,6 +57,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 | 广发基金去开屏 | 本仓库根据实机请求维护 | Surge `.sgmodule` | 仅拦截 `trade-pic/app/pic/` 下带 `_ios` 或 `_kpios` 后缀的 iOS 开屏图片 |
 | 浦大喜奔开屏补充 | 本仓库根据实机请求维护 | Surge `.sgmodule` | 补充拦截上游模块尚未覆盖、经实机确认的开屏素材 |
 | 医考帮去开屏 | 本仓库根据实机抓包维护 | Surge `.sgmodule` | 仅删除启动配置响应中的 `boot_page` 对象，保留同一接口的其他数据 |
+| 摩根资产管理去开屏 | 本仓库根据实机抓包维护 | Surge `.sgmodule` | 仅清空原生启动请求中的开屏广告数组，不影响同接口的首页广告位 |
 
 当前主模块只包含以上两类内容。
 

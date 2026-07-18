@@ -372,6 +372,10 @@
     {
       "name": "医考帮去开屏",
       "path": "modules/YiKaoBang.sgmodule"
+    },
+    {
+      "name": "摩根资产管理去开屏",
+      "path": "modules/JPMorganAssetManagement.sgmodule"
     }
   ],
   "external_modules": [

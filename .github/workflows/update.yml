@@ -39,6 +39,9 @@ jobs:
           grep -q '^\[MITM\]' dist/StartUpAds_Selected.sgmodule
           grep -Fq '^https:\/\/pan\.baidu\.com\/act\/api\/activityentry - reject-dict' dist/StartUpAds_Selected.sgmodule
           grep -Fq '^https:\/\/pan\.baidu\.com\/buy\/ad\/conf\?.*type=splashMode - reject-dict' dist/StartUpAds_Selected.sgmodule
+          grep -Fq 'ecmob\.cifm\.com\/mall-fundcustom-server\/adinfo\/queryAdInfo' dist/StartUpAds_Selected.sgmodule
+          grep -Fq 'scripts/jpmorgan-startup-ad.js' dist/StartUpAds_Selected.sgmodule
+          grep -Fq 'ecmob.cifm.com' dist/StartUpAds_Selected.sgmodule
 
       - name: Commit updated module
         run: |
