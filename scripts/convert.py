@@ -346,7 +346,7 @@ def build_module(
 
     source_sha = hashlib.sha256(source_text.encode("utf-8")).hexdigest()
     output: list[str] = [
-        "#!name=墨鱼去开屏 · Surge 全量转换",
+        "#!name=Surge 去开屏模块",
         "#!desc=完整转换墨鱼 StartUpAds.conf，并合并本仓库维护的本地补丁",
         "#!author=ddgksf2013 + Walvez",
         "#!homepage=https://github.com/Walvez/surge-startup-ads",

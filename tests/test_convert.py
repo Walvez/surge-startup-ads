@@ -30,6 +30,7 @@ class ConvertTests(unittest.TestCase):
         self.assertEqual(stats["blocks"], 3)
         self.assertEqual(stats["upstream_rules"], 3)
         self.assertEqual(stats["hostnames"], 3)
+        self.assertIn("#!name=Surge 去开屏模块", module)
         self.assertIn("#!date=2026-07-19", module)
         self.assertIn("[URL Rewrite]", module)
         self.assertIn("[Map Local]", module)
