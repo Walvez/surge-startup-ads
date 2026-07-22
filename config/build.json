@@ -17,6 +17,19 @@
         "^https:\\/\\/pan\\.baidu\\.com\\/act\\/api\\/activityentry - reject-dict",
         "^https:\\/\\/pan\\.baidu\\.com\\/buy\\/ad\\/conf\\?.*type=splashMode - reject-dict"
       ]
+    },
+    {
+      "name": "掌上生活首页浮窗",
+      "section": "URL Rewrite",
+      "remove_contains": [
+        "mlife\\.intelli\\.adrender\\.api\\.AdWork\\/getAdsBySlotId"
+      ],
+      "hostnames": [
+        "intellicc.bcs.cmbchina.com"
+      ],
+      "lines": [
+        "^https:\\/\\/intellicc\\.bcs\\.cmbchina\\.com\\/Edge\\/api\\/mlife\\.intelli\\.adrender\\.api\\.AdWork\\/getAdsBySlotId(?:\\?|$) - reject-200"
+      ]
     }
   ],
   "local_modules": [

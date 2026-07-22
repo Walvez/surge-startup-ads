@@ -68,6 +68,27 @@ class ConvertTests(unittest.TestCase):
         paths = {item["path"] for item in config["local_modules"]}
         self.assertIn("modules/FakeiOSAds.sgmodule", paths)
 
+    def test_local_override_adds_narrow_mitm_hostname(self):
+        self.config["local_overrides"] = [
+            {
+                "name": "sample local override",
+                "section": "URL Rewrite",
+                "lines": [r"^https:\/\/popup\.example\.com\/ad - reject-200"],
+                "hostnames": ["popup.example.com"],
+            }
+        ]
+
+        module, stats = build_module(
+            self.config,
+            "fixture://StartUpAds.sample.conf",
+            self.source,
+            resource_fetcher=lambda _url: '{"sdk":[],"addata":[]}',
+        )
+
+        self.assertEqual(stats["hostnames"], 4)
+        self.assertIn("popup.example.com", module)
+        self.assertNotIn("hostname = *", module)
+
     def test_hostname_line_is_not_part_of_last_block(self):
         blocks = split_qx_blocks(self.source)
         last_block = blocks["sample-echo"]

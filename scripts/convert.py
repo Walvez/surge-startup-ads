@@ -270,7 +270,11 @@ def merge_surge_module(
         append_unique(sections[current], line)
 
 
-def apply_local_overrides(config: dict, sections: dict[str, list[str]]) -> list[str]:
+def apply_local_overrides(
+    config: dict,
+    sections: dict[str, list[str]],
+    hostnames: list[str],
+) -> list[str]:
     results: list[str] = []
     for override in config.get("local_overrides", []):
         name = override["name"]
@@ -287,6 +291,11 @@ def apply_local_overrides(config: dict, sections: dict[str, list[str]]) -> list[
         append_unique(sections[section], f"# ===== {name} =====")
         for line in lines:
             append_unique(sections[section], line)
+        for hostname in override.get("hostnames", []):
+            hostname = hostname.strip()
+            if not hostname or hostname == "*":
+                raise BuildError(f"{name}: invalid override hostname: {hostname!r}")
+            append_unique(hostnames, hostname)
         results.append(f"{name}: applied")
     return results
 
@@ -332,7 +341,7 @@ def build_module(
     if converted_rules == 0:
         raise BuildError("no upstream rules were generated")
 
-    supplemental_results = apply_local_overrides(config, sections)
+    supplemental_results = apply_local_overrides(config, sections, hostnames)
     script_counter = [counters["script"]]
     for module in config.get("local_modules", []):
         name = module["name"]
