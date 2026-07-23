@@ -1,15 +1,17 @@
-// 播放页下方 banner 轻量处理（仅 app.bilibili.com ViewUnite）。
+// 播放页下方 banner 轻量处理（app.bilibili.com / app.biliapi.net ViewUnite）。
 // 相对旧版减负：
-// 1) 仅 hook app.bilibili.com，不扩额外 gRPC 主机
+// 1) 不 hook grpc.* 主机（避免评论卡顿）
 // 2) 解压后先 indexOf 扫描协议特征，无广告标记则原样放行
 // 3) 不碰评论 / 不碰播放器配置接口
-// Banner 素材轮换，只认 relatedvideo.cm / sycp/* / 立即下载 等稳定特征。
+// Banner 会轮换、且不按 UP 绑定；只认投放位协议特征。
 
 const SCAN_MARKERS = [
   "relatedvideo.cm",
   "sycp/sanlian",
   "sycp/mgk",
   "立即下载",
+  "查看详情",
+  "了解更多",
 ];
 
 const DROP_MARKERS = [
@@ -24,7 +26,8 @@ const DROP_MARKERS = [
   "unet.quark.cn/v3/ad",
 ];
 
-const CTA_DOWNLOAD = "立即下载";
+// 常见 CTA：立即下载 / 查看详情 / 了解更多（证券类广告多用查看详情）
+const CTA_LABELS = ["立即下载", "查看详情", "了解更多", "立即打开", "去看看"];
 const LABEL_AD = "广告";
 
 function utf8Encode(text) {
@@ -70,19 +73,31 @@ function hasScanMarker(data) {
   return false;
 }
 
+function hasCta(data) {
+  for (const cta of CTA_LABELS) {
+    if (bytesIncludes(data, cta)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function hasDropMarker(data) {
   for (const m of DROP_MARKERS) {
     if (bytesIncludes(data, m)) {
       return true;
     }
   }
-  if (bytesIncludes(data, CTA_DOWNLOAD)) {
+  // CTA + 广告角标 / 商业素材 / 商店落地
+  if (hasCta(data) && bytesIncludes(data, LABEL_AD)) {
+    return true;
+  }
+  if (hasCta(data)) {
     if (
       bytesIncludes(data, "apps.apple.com") ||
       bytesIncludes(data, "itunes.apple.com") ||
       bytesIncludes(data, "adtrack.") ||
-      bytesIncludes(data, "sycp/") ||
-      bytesIncludes(data, LABEL_AD)
+      bytesIncludes(data, "sycp/")
     ) {
       return true;
     }

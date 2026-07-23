@@ -23,6 +23,15 @@ SCAN_MARKERS = [
     b"sycp/sanlian",
     b"sycp/mgk",
     "立即下载".encode(),
+    "查看详情".encode(),
+    "了解更多".encode(),
+]
+CTA_LABELS = [
+    "立即下载".encode(),
+    "查看详情".encode(),
+    "了解更多".encode(),
+    "立即打开".encode(),
+    "去看看".encode(),
 ]
 
 DROP_MARKERS = [
@@ -44,15 +53,20 @@ def has_scan_marker(data: bytes) -> bool:
     return any(m in data for m in SCAN_MARKERS)
 
 
+def has_cta(data: bytes) -> bool:
+    return any(c in data for c in CTA_LABELS)
+
+
 def has_drop_marker(data: bytes) -> bool:
     if any(m in data for m in DROP_MARKERS):
         return True
-    if CTA in data and (
+    if has_cta(data) and LABEL_AD in data:
+        return True
+    if has_cta(data) and (
         b"apps.apple.com" in data
         or b"itunes.apple.com" in data
         or b"adtrack." in data
         or b"sycp/" in data
-        or LABEL_AD in data
     ):
         return True
     if b"sycp/face" in data and LABEL_AD in data:
@@ -185,23 +199,22 @@ class BilibiliViewBannerLiteTests(unittest.TestCase):
         module = MODULE.read_text(encoding="utf-8")
         qx = QX_LOCAL.read_text(encoding="utf-8")
 
-        self.assertIn("app.bilibili.com", module)
         self.assertIn("viewunite", module)
         self.assertIn("bilibili-view-banner-lite.js", module)
         self.assertIn(r"sycp\/(sanlian|mgk)", module)
         self.assertIn("bilibili-view-banner-lite.js", qx)
         self.assertIn("sycp", qx)
+        # app.biliapi.net allowed; grpc host not.
+        self.assertIn(r"app\.bili(bili\.com|api\.net)", module)
 
-        # Must NOT reintroduce the laggy surface area.
         mitm_line = [ln for ln in module.splitlines() if "hostname" in ln.lower()][-1]
         self.assertNotIn("grpc.biliapi.net", mitm_line)
         self.assertNotIn("grpc.biliapi.net", qx.split("[mitm]")[-1] if "[mitm]" in qx else qx)
         self.assertNotIn("MainList", script)
-        # Pattern must stay app.bilibili.com only.
-        self.assertIn("app.bilibili.com", module)
         self.assertNotIn("grpc.biliapi.net/bilibili", module)
         self.assertIn("hasScanMarker", script)
         self.assertIn("relatedvideo.cm", script)
+        self.assertIn("查看详情", script)
 
     def test_har_app_bilibili_view_strips_banner_markers(self):
         if not VIEW_HAR.is_file():
@@ -213,7 +226,7 @@ class BilibiliViewBannerLiteTests(unittest.TestCase):
             url = entry["request"]["url"]
             host = urlparse(url).netloc
             path = urlparse(url).path
-            if host != "app.bilibili.com":
+            if host not in ("app.bilibili.com", "app.biliapi.net"):
                 continue
             if not path.endswith("/bilibili.app.viewunite.v1.View/View"):
                 continue
