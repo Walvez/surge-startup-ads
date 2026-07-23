@@ -10,7 +10,7 @@
 # Upstream blocks: 397
 # Upstream rules converted: 506
 # Upstream MITM hostnames: 438
-# Local additions: 百度网盘本地覆盖: applied; 掌上生活首页浮窗: applied; 影视去广告: merged; 广发基金去开屏: merged; 浦大喜奔开屏补充: merged; 医考帮去开屏: merged; 摩根资产管理去开屏: merged
+# Local additions: 百度网盘本地覆盖: applied; 掌上生活首页浮窗: applied; 京东健康开屏: applied; 影视去广告: merged; 广发基金去开屏: merged; 浦大喜奔开屏补充: merged; 医考帮去开屏: merged; 摩根资产管理去开屏: merged
 
 [Rule]
 # ===== 12306 =====
@@ -842,6 +842,8 @@ https?:\/\/m\.sd\.10086\.cn\/zapi\/app_common\/homeWelcome\/welcome.do - reject-
 ^https:\/\/pan\.baidu\.com\/buy\/ad\/conf\?.*type=splashMode - reject-dict
 # ===== 掌上生活首页浮窗 =====
 ^https:\/\/intellicc\.bcs\.cmbchina\.com\/Edge\/api\/mlife\.intelli\.adrender\.api\.AdWork\/getAdsBySlotId(?:\?|$) - reject-200
+# ===== 京东健康开屏 =====
+^https:\/\/api\.m\.jd\.com\/api\?(?:[^#]*&)?functionId=jdh_queryStartupResources(?:&|$) - reject-dict
 ^http:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,4}(:\d+)?\/.*?\/v\d\/(version|notice\?|top_notice\?|advert\?position=[^2]+) - reject-200
 ^https:\/\/cdngfwx\.gffunds\.com\.cn\/trade-pic\/app\/pic\/[^?]*_(?:kp)?ios\.(?:jpe?g|png|webp)(?:\?.*)?$ - reject
 

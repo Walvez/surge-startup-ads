@@ -21,6 +21,8 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 - 完整上游 MITM hostname 列表；
 - 影视类 FakeiOSAds 转换规则；
 - 百度网盘 `activityentry` 与 `splashMode` 本地覆盖；
+- 掌上生活首页浮窗拦截；
+- 京东健康启动开屏资源拦截；
 - 广发基金 iOS 开屏图片拦截；
 - 浦大喜奔当前开屏素材拦截；
 - 医考帮开屏、启动弹窗、首页浮窗及横幅广告清理；
