@@ -40,6 +40,17 @@
       "lines": [
         "^https:\\/\\/api\\.m\\.jd\\.com\\/api\\?(?:[^#]*&)?functionId=jdh_queryStartupResources(?:&|$) - reject-dict"
       ]
+    },
+    {
+      "name": "哔哩哔哩开屏",
+      "section": "URL Rewrite",
+      "hostnames": [
+        "app.bilibili.com",
+        "app.biliapi.net"
+      ],
+      "lines": [
+        "^https?:\\/\\/app\\.bili(bili\\.com|api\\.net)\\/x\\/v2\\/splash\\/(brand\\/list|event\\/list2|list|show)(?:\\?|$) - reject-dict"
+      ]
     }
   ],
   "local_modules": [
