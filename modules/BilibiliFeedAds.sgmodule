@@ -1,0 +1,9 @@
+#!name=哔哩哔哩推荐流广告补充
+#!desc=仅移除推荐信息流中的「创作推广」与「会员购」卡片；不动开屏、banner、搜索、动态、评论，也不走全量 B 站去广告模块。
+#!author=Walvez
+
+[Script]
+哔哩哔哩信息流广告 = type=http-response, pattern=^https?:\/\/app\.bili(bili\.com|api\.net)\/x\/v2\/feed\/index(?:\?|$), requires-body=true, max-size=-1, timeout=10, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/fix/bilibili-feed-ads/scripts/bilibili-feed-ads.js
+
+[MITM]
+hostname = %APPEND% app.bilibili.com, app.biliapi.net

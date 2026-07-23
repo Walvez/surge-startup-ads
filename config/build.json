@@ -73,6 +73,10 @@
     {
       "name": "摩根资产管理去开屏",
       "path": "modules/JPMorganAssetManagement.sgmodule"
+    },
+    {
+      "name": "哔哩哔哩推荐流广告补充",
+      "path": "modules/BilibiliFeedAds.sgmodule"
     }
   ]
 }

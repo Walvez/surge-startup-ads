@@ -1,0 +1,65 @@
+{
+  "code": 0,
+  "message": "OK",
+  "ttl": 1,
+  "data": {
+    "items": [
+      {
+        "card_type": "banner_v8",
+        "card_goto": "banner",
+        "banner_item": [
+          {"type": "static", "id": 1},
+          {"type": "ad", "id": 0}
+        ]
+      },
+      {
+        "card_type": "small_cover_v2",
+        "card_goto": "av",
+        "title": "普通推荐视频"
+      },
+      {
+        "card_type": "cm_v2",
+        "card_goto": "ad_av",
+        "title": "当我用AI生成喜欢的角色（自定义）",
+        "desc": "AI还能这么玩",
+        "ad_info": {
+          "is_ad": true,
+          "creative_content": {
+            "title": "当我用AI生成喜欢的角色（自定义）"
+          }
+        }
+      },
+      {
+        "card_type": "small_cover_v2",
+        "card_goto": "av",
+        "title": "另一个普通视频"
+      },
+      {
+        "card_type": "cm_v2",
+        "card_goto": "ad_web_s",
+        "ad_info": {
+          "creative_content": {
+            "title": "特典售完不补:《OPUS完全版》",
+            "description": "浙江新华书店旗舰店"
+          }
+        }
+      },
+      {
+        "card_type": "cm_v2",
+        "card_goto": "ad_web_gif",
+        "title": "App Store 其它广告占位，本规则不处理"
+      },
+      {
+        "card_type": "cm_v2",
+        "card_goto": "unknown_future",
+        "desc": "带创作推广角标的兜底样例",
+        "badge": {"text": "创作推广"}
+      },
+      {
+        "card_type": "ogv_small_cover",
+        "card_goto": "bangumi",
+        "title": "番剧卡片应保留"
+      }
+    ]
+  }
+}
