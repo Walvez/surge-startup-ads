@@ -21,7 +21,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 - 完整上游 MITM hostname 列表；
 - 影视类 FakeiOSAds 转换规则；
 - 百度网盘 `activityentry` 与 `splashMode` 本地覆盖；
-- 掌上生活首页浮窗拦截；
+- 掌上生活开屏预缓存与首页浮窗拦截；
 - 京东健康启动开屏资源拦截；
 - 广发基金 iOS 开屏图片拦截；
 - 浦大喜奔当前开屏素材拦截；
@@ -224,7 +224,7 @@ Quantumult X 用户可在已经启用墨鱼 `StartUpAds.conf` 的基础上，添
 https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/quantumultx/StartUpAds_Local.conf
 ```
 
-请添加到 Quantumult X 的“重写资源”。该订阅包含百度网盘 `splashMode`、掌上生活首页浮窗、广发基金、浦大喜奔、医考帮和摩根资产管理补充规则，不属于 Surge 主模块订阅。
+请添加到 Quantumult X 的“重写资源”。该订阅包含百度网盘 `splashMode`、掌上生活开屏与首页浮窗、京东健康、哔哩哔哩开屏/推荐流、广发基金、浦大喜奔、医考帮和摩根资产管理补充规则，不属于 Surge 主模块订阅。
 
 ## 自动更新
 
