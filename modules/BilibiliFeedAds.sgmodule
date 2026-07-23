@@ -1,10 +1,16 @@
 #!name=哔哩哔哩广告补充
-#!desc=开屏返回完整空结构（避免缓存续播）；推荐流仅去创作推广/会员购/App Store。不做播放页 gRPC 改写，也不走全量 B 站去广告。
+#!desc=开屏空结构；推荐流去创作推广/会员购/App Store；播放页下方 banner 用轻量方案（CDN sycp 素材 reject + 仅 app.bilibili.com View 快路径）。不扩 gRPC 主机名，不改评论。
 #!author=Walvez
+
+[URL Rewrite]
+# 层 A：商业 banner 配图（sanlian/mgk），无 body、极轻；可能残留空壳
+^https?:\/\/[^\/]*\.hdslb\.com\/bfs\/sycp\/(sanlian|mgk)\/ - reject
 
 [Script]
 哔哩哔哩开屏 = type=http-response, pattern=^https?:\/\/app\.bili(bili\.com|api\.net)\/x\/v2\/splash\/(brand\/list|event\/list2?|list|show)(?:\?|$), requires-body=true, max-size=-1, timeout=10, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/fix/bilibili-feed-ads/scripts/bilibili-splash-ads.js
 哔哩哔哩信息流广告 = type=http-response, pattern=^https?:\/\/app\.bili(bili\.com|api\.net)\/x\/v2\/feed\/index(?:\?|$), requires-body=true, max-size=-1, timeout=10, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/fix/bilibili-feed-ads/scripts/bilibili-feed-ads.js
+# 层 B：仅 app.bilibili.com ViewUnite；无标记早退；失败原样放行
+哔哩哔哩播放页banner轻量 = type=http-response, pattern=^https?:\/\/app\.bilibili\.com\/bilibili\.app\.viewunite\.v1\.View\/View$, requires-body=true, binary-body-mode=true, max-size=-1, timeout=12, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/fix/bilibili-feed-ads/scripts/bilibili-view-banner-lite.js
 
 [MITM]
 hostname = %APPEND% app.bilibili.com, app.biliapi.net

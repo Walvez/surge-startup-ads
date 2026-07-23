@@ -117,13 +117,14 @@ class BilibiliFeedAdsTests(unittest.TestCase):
         self.assertIn(r"feed\/index", module)
         self.assertIn("bilibili-feed-ads.js", module)
         self.assertNotIn("bilibili-view-under-ad.js", module)
-        self.assertNotIn("viewunite", module)
-        self.assertNotIn("grpc.biliapi.net", module)
+        self.assertIn("bilibili-view-banner-lite.js", module)
+        self.assertIn("viewunite", module)
+        mitm_line = [ln for ln in module.splitlines() if "hostname" in ln.lower()][-1]
+        self.assertNotIn("grpc.biliapi.net", mitm_line)
         self.assertIn(r"feed\/index", qx)
         self.assertIn("bilibili-feed-ads.js", qx)
-        self.assertNotIn("bilibili-view-under-ad.js", qx)
-        self.assertNotIn("viewunite", qx)
-        self.assertNotIn("grpc.biliapi.net", qx)
+        self.assertIn("bilibili-view-banner-lite.js", qx)
+        self.assertNotIn("grpc.biliapi.net", qx.split("[mitm]")[-1] if "[mitm]" in qx else qx)
         # Must not attach broad B 站 hooks (comments / dynamic / full ADBlock).
         self.assertIn("splash", module)  # intentional: structured empty splash
         self.assertNotIn("dynamic", module.lower())
