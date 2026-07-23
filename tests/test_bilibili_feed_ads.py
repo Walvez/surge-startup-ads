@@ -116,13 +116,17 @@ class BilibiliFeedAdsTests(unittest.TestCase):
         self.assertIn("App Store", script)
         self.assertIn(r"feed\/index", module)
         self.assertIn("bilibili-feed-ads.js", module)
+        self.assertIn("bilibili-view-under-ad.js", module)
+        self.assertIn("viewunite", module)
         self.assertIn(r"feed\/index", qx)
         self.assertIn("bilibili-feed-ads.js", qx)
-        # Must not attach broad B 站 hooks.
+        self.assertIn("bilibili-view-under-ad.js", qx)
+        self.assertIn("viewunite", qx)
+        # Must not attach broad B 站 hooks (comments / dynamic / full ADBlock).
         self.assertNotIn("splash", module)
-        self.assertNotIn("grpc", module.lower())
         self.assertNotIn("dynamic", module.lower())
         self.assertNotIn("reply", module.lower())
+        self.assertNotIn("MainList", module)
 
     def test_har_real_feed_if_present(self):
         if not HAR_PATH.is_file():
