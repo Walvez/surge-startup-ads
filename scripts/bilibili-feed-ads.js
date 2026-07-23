@@ -1,8 +1,11 @@
-// 仅移除推荐信息流中的「创作推广」(ad_av) 与「会员购」(ad_web_s) 卡片。
+// 仅移除推荐信息流中的：
+// - 「创作推广」(ad_av)
+// - 「会员购」(ad_web_s)
+// - App Store / Apple 信息流大图 (ad_web_gif)
 // 不处理开屏、banner 轮播、搜索、动态、评论或其它接口，避免全量去广告脚本拖慢 App。
 
-const TARGET_CARD_GOTOS = new Set(["ad_av", "ad_web_s"]);
-const TARGET_BADGE_TEXT = ["创作推广", "会员购"];
+const TARGET_CARD_GOTOS = new Set(["ad_av", "ad_web_s", "ad_web_gif"]);
+const TARGET_BADGE_TEXT = ["创作推广", "会员购", "App Store", "立即探索 App Store"];
 
 function collectText(value, out) {
   if (value == null) {
@@ -77,7 +80,7 @@ try {
     payload.data.items = filterFeedItems(payload.data.items);
     const removed = before - payload.data.items.length;
     if (removed > 0) {
-      console.log(`哔哩哔哩信息流：移除 ${removed} 条创作推广/会员购卡片`);
+      console.log(`哔哩哔哩信息流：移除 ${removed} 条创作推广/会员购/App Store 卡片`);
     }
     responseBody = JSON.stringify(payload);
   }

@@ -15,8 +15,8 @@ MODULE = ROOT / "modules" / "BilibiliFeedAds.sgmodule"
 QX_LOCAL = ROOT / "quantumultx" / "StartUpAds_Local.conf"
 HAR_PATH = Path("/Users/walve/Downloads/quantumult-x-2026-07-23-160037.har")
 
-TARGET_CARD_GOTOS = frozenset({"ad_av", "ad_web_s"})
-TARGET_BADGE_TEXT = ("创作推广", "会员购")
+TARGET_CARD_GOTOS = frozenset({"ad_av", "ad_web_s", "ad_web_gif"})
+TARGET_BADGE_TEXT = ("创作推广", "会员购", "App Store", "立即探索 App Store")
 
 
 def collect_text(value, out: list[str]) -> None:
@@ -75,15 +75,15 @@ class BilibiliFeedAdsTests(unittest.TestCase):
         gotos = [item.get("card_goto") for item in filtered]
         self.assertNotIn("ad_av", gotos)
         self.assertNotIn("ad_web_s", gotos)
+        self.assertNotIn("ad_web_gif", gotos)
         self.assertIn("banner", gotos)
         self.assertIn("av", gotos)
-        self.assertIn("ad_web_gif", gotos)
         self.assertIn("bangumi", gotos)
-        self.assertEqual(len(filtered), 5)
+        self.assertEqual(len(filtered), 4)
 
         titles = [item.get("title") for item in filtered]
         self.assertIn("普通推荐视频", titles)
-        self.assertIn("App Store 其它广告占位，本规则不处理", titles)
+        self.assertNotIn("立即探索 App Store", titles)
         self.assertNotIn("当我用AI生成喜欢的角色（自定义）", titles)
 
     def test_badge_fallback_catches_cm_v2_without_known_goto(self):
@@ -110,8 +110,10 @@ class BilibiliFeedAdsTests(unittest.TestCase):
 
         self.assertIn("ad_av", script)
         self.assertIn("ad_web_s", script)
+        self.assertIn("ad_web_gif", script)
         self.assertIn("创作推广", script)
         self.assertIn("会员购", script)
+        self.assertIn("App Store", script)
         self.assertIn(r"feed\/index", module)
         self.assertIn("bilibili-feed-ads.js", module)
         self.assertIn(r"feed\/index", qx)
@@ -165,13 +167,60 @@ class BilibiliFeedAdsTests(unittest.TestCase):
 
             self.assertNotIn("ad_av", after_gotos)
             self.assertNotIn("ad_web_s", after_gotos)
+            self.assertNotIn("ad_web_gif", after_gotos)
             # Banner and normal videos remain.
             if "banner" in before_gotos:
                 self.assertIn("banner", after_gotos)
             self.assertTrue(any(g in ("av", "vertical_av", "picture", "bangumi") for g in after_gotos))
-            self.assertLess(len(filtered), len(items))
+            if any(g in TARGET_CARD_GOTOS for g in before_gotos):
+                self.assertLess(len(filtered), len(items))
 
         self.assertGreaterEqual(matched, 1)
+
+    def test_new_apple_har_removes_ad_web_gif(self):
+        apple_har = Path("/Users/walve/Downloads/quantumult-x-2026-07-23-181638.har")
+        if not apple_har.is_file():
+            self.skipTest("Apple feed HAR not present on this machine")
+
+        import base64
+        import gzip
+        from urllib.parse import urlparse
+
+        har = json.loads(apple_har.read_text(encoding="utf-8"))
+
+        def body_text(entry: dict) -> str | None:
+            content = entry["response"].get("content") or {}
+            text = content.get("text")
+            if text is None:
+                return None
+            if content.get("encoding") == "base64":
+                raw = base64.b64decode(text)
+                try:
+                    raw = gzip.decompress(raw)
+                except OSError:
+                    pass
+                return raw.decode("utf-8", errors="replace")
+            return text
+
+        saw_gif = 0
+        for entry in har["log"]["entries"]:
+            if not urlparse(entry["request"]["url"]).path.endswith("/x/v2/feed/index"):
+                continue
+            text = body_text(entry)
+            if not text:
+                continue
+            payload = json.loads(text)
+            items = (payload.get("data") or {}).get("items") or []
+            if not any(item.get("card_goto") == "ad_web_gif" for item in items):
+                continue
+            saw_gif += 1
+            filtered = filter_feed_items(items)
+            after_gotos = [item.get("card_goto") for item in filtered]
+            self.assertNotIn("ad_web_gif", after_gotos)
+            self.assertTrue(any(g in ("av", "bangumi") for g in after_gotos))
+            self.assertLess(len(filtered), len(items))
+
+        self.assertGreaterEqual(saw_gif, 1)
 
 
 if __name__ == "__main__":
