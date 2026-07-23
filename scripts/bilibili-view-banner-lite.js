@@ -35,6 +35,10 @@ const DROP_MARKERS = [
   // 播放页横幅「广告」角标颜色
   "#9499A0FF",
   "#757A81FF",
+  // 商业卡监测/归因参数（重返未来等游戏卡裁剪后仍残留）
+  "sycp_android_id",
+  "sycp_ip_before",
+  "sycp_ip=",
 ];
 
 // 常见 CTA：立即下载 / 查看详情 / 了解更多（证券类多用查看详情）
@@ -97,9 +101,22 @@ function hasCta(data) {
 }
 
 function isResidualAdCard(data) {
-  // 子字段被裁掉后，父卡片可能只剩标题+「广告·N播放」+ 封面，需按小卡片启发式丢掉
+  // 子字段被裁掉后，父卡片可能只剩标题+「广告·N播放」+ 封面 / App Store 落地
   if (data.length > RESIDUAL_AD_MAX_LEN) {
     return false;
+  }
+  const hasStore =
+    bytesIncludes(data, "apps.apple.com") ||
+    bytesIncludes(data, "itunes.apple.com");
+  // 游戏/应用下载卡：商店链接 + 商业追踪/播放/隐私协议
+  if (
+    hasStore &&
+    (bytesIncludes(data, "sycp") ||
+      bytesIncludes(data, LABEL_PLAY) ||
+      bytesIncludes(data, "隐私协议") ||
+      bytesIncludes(data, "com."))
+  ) {
+    return true;
   }
   if (!bytesIncludes(data, LABEL_AD)) {
     return false;
@@ -115,6 +132,10 @@ function isResidualAdCard(data) {
   }
   // 广告负反馈文案多在商业卡上
   if (bytesIncludes(data, "sycp/mng") && bytesIncludes(data, "屏蔽广告")) {
+    return true;
+  }
+  // 「评分 x.x/5」游戏软广横幅
+  if (bytesIncludes(data, "评分") && (hasStore || bytesIncludes(data, "sycp"))) {
     return true;
   }
   return false;

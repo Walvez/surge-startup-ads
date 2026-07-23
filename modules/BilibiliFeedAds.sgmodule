@@ -3,8 +3,8 @@
 #!author=Walvez
 
 [URL Rewrite]
-# 层 A：商业 banner 配图（sanlian/mgk），无 body、极轻；单独使用会残留灰图标空壳
-^https?:\/\/[^\/]*\.hdslb\.com\/bfs\/sycp\/(sanlian|mgk)\/ - reject
+# 层 A：商业 banner 配图（sanlian/mgk/app_icon），无 body、极轻；单独使用会残留灰图标空壳
+^https?:\/\/[^\/]*\.hdslb\.com\/bfs\/sycp\/(sanlian|mgk|app_icon)\/ - reject
 
 [Script]
 哔哩哔哩开屏 = type=http-response, pattern=^https?:\/\/app\.bili(bili\.com|api\.net)\/x\/v2\/splash\/(brand\/list|event\/list2?|list|show)(?:\?|$), requires-body=true, max-size=-1, timeout=10, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/fix/bilibili-feed-ads/scripts/bilibili-splash-ads.js

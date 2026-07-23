@@ -52,6 +52,9 @@ DROP_MARKERS = [
     b"type.googleapis.com/bilibili.ad",
     b"#9499A0FF",
     b"#757A81FF",
+    b"sycp_android_id",
+    b"sycp_ip_before",
+    b"sycp_ip=",
 ]
 LABEL_AD = "广告".encode()
 LABEL_PLAY = "播放".encode()
@@ -69,6 +72,14 @@ def has_cta(data: bytes) -> bool:
 def is_residual_ad_card(data: bytes) -> bool:
     if len(data) > RESIDUAL_AD_MAX_LEN:
         return False
+    has_store = b"apps.apple.com" in data or b"itunes.apple.com" in data
+    if has_store and (
+        b"sycp" in data
+        or LABEL_PLAY in data
+        or "隐私协议".encode() in data
+        or b"com." in data
+    ):
+        return True
     if LABEL_AD not in data:
         return False
     if LABEL_PLAY in data and (
@@ -79,6 +90,8 @@ def is_residual_ad_card(data: bytes) -> bool:
     ):
         return True
     if b"sycp/mng" in data and "屏蔽广告".encode() in data:
+        return True
+    if "评分".encode() in data and (has_store or b"sycp" in data):
         return True
     return False
 
@@ -229,7 +242,8 @@ class BilibiliViewBannerLiteTests(unittest.TestCase):
 
         self.assertIn("viewunite", module)
         self.assertIn("bilibili-view-banner-lite.js", module)
-        self.assertIn(r"sycp\/(sanlian|mgk)", module)
+        self.assertIn("sycp", module)
+        self.assertIn("app_icon", module)
         self.assertIn("bilibili-view-banner-lite.js", qx)
         self.assertIn("sycp", qx)
         # app.biliapi.net allowed; grpc host not.
@@ -310,11 +324,44 @@ class BilibiliViewBannerLiteTests(unittest.TestCase):
 
         self.assertGreaterEqual(matched, 1)
 
+    def test_latest_har_strips_reverse1999_banner(self):
+        """Screenshot-aligned HAR: 重返未来横幅 must not survive clean."""
+        latest = Path("/Users/walve/Downloads/quantumult-x-2026-07-23-194219.har")
+        if not latest.is_file():
+            self.skipTest("latest HAR not present")
+
+        har = json.loads(latest.read_text(encoding="utf-8"))
+        matched = 0
+        for entry in har["log"]["entries"]:
+            url = entry["request"]["url"]
+            host = urlparse(url).netloc
+            path = urlparse(url).path
+            if host not in ("app.bilibili.com", "app.biliapi.net"):
+                continue
+            if not path.endswith("/bilibili.app.viewunite.v1.View/View"):
+                continue
+            raw = get_raw(entry["response"])
+            if not raw or len(raw) < 5000 or b"400 Bad Request" in raw:
+                continue
+            msg = decode_grpc_message(raw)
+            if "重返未来".encode() not in msg and "双生舞伶".encode() not in msg:
+                continue
+            matched += 1
+            cleaned = clean_message(msg)
+            self.assertNotIn("重返未来".encode(), cleaned)
+            self.assertNotIn("双生舞伶".encode(), cleaned)
+            self.assertNotIn(b"AdsControlDto", cleaned)
+            self.assertNotIn(b"relatedvideo.cm", cleaned)
+            self.assertIn("简介".encode(), cleaned)
+
+        self.assertGreaterEqual(matched, 1)
+
     def test_layer_a_cdn_rule_present(self):
         module = MODULE.read_text(encoding="utf-8")
         qx = QX_LOCAL.read_text(encoding="utf-8")
-        self.assertRegex(module, r"sycp\\/\(sanlian\|mgk\)")
+        self.assertIn("sanlian|mgk|app_icon", module)
         self.assertIn("sycp", qx)
+        self.assertIn("app_icon", qx)
         self.assertIn("reject", qx.lower())
 
 

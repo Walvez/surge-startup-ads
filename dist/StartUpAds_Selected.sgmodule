@@ -846,8 +846,8 @@ https?:\/\/m\.sd\.10086\.cn\/zapi\/app_common\/homeWelcome\/welcome.do - reject-
 ^https:\/\/api\.m\.jd\.com\/api\?(?:[^#]*&)?functionId=jdh_queryStartupResources(?:&|$) - reject-dict
 ^http:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,4}(:\d+)?\/.*?\/v\d\/(version|notice\?|top_notice\?|advert\?position=[^2]+) - reject-200
 ^https:\/\/cdngfwx\.gffunds\.com\.cn\/trade-pic\/app\/pic\/[^?]*_(?:kp)?ios\.(?:jpe?g|png|webp)(?:\?.*)?$ - reject
-# [哔哩哔哩推荐流广告补充] 层 A：商业 banner 配图（sanlian/mgk），无 body、极轻；单独使用会残留灰图标空壳
-^https?:\/\/[^\/]*\.hdslb\.com\/bfs\/sycp\/(sanlian|mgk)\/ - reject
+# [哔哩哔哩推荐流广告补充] 层 A：商业 banner 配图（sanlian/mgk/app_icon），无 body、极轻；单独使用会残留灰图标空壳
+^https?:\/\/[^\/]*\.hdslb\.com\/bfs\/sycp\/(sanlian|mgk|app_icon)\/ - reject
 
 [Map Local]
 # ===== dongqiudi =====
