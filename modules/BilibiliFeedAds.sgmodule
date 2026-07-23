@@ -1,8 +1,9 @@
-#!name=哔哩哔哩推荐流广告补充
-#!desc=仅移除推荐信息流（创作推广/会员购/App Store）与播放页视频下方 banner 广告；不动开屏、搜索、动态、评论，也不走全量 B 站去广告模块。
+#!name=哔哩哔哩广告补充
+#!desc=开屏返回完整空结构（避免缓存续播）、推荐流去创作推广/会员购/App Store、播放页下去除下方 banner；不做全量 B 站去广告。
 #!author=Walvez
 
 [Script]
+哔哩哔哩开屏 = type=http-response, pattern=^https?:\/\/app\.bili(bili\.com|api\.net)\/x\/v2\/splash\/(brand\/list|event\/list2?|list|show)(?:\?|$), requires-body=true, max-size=-1, timeout=10, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/fix/bilibili-feed-ads/scripts/bilibili-splash-ads.js
 哔哩哔哩信息流广告 = type=http-response, pattern=^https?:\/\/app\.bili(bili\.com|api\.net)\/x\/v2\/feed\/index(?:\?|$), requires-body=true, max-size=-1, timeout=10, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/fix/bilibili-feed-ads/scripts/bilibili-feed-ads.js
 哔哩哔哩播放页下方广告 = type=http-response, pattern=^https?:\/\/(app|grpc)\.bili(bili\.com|api\.net)\/bilibili\.app\.viewunite\.v1\.View\/View$, requires-body=true, binary-body-mode=true, max-size=-1, timeout=15, script-path=https://raw.githubusercontent.com/Walvez/surge-startup-ads/fix/bilibili-feed-ads/scripts/bilibili-view-under-ad.js
 

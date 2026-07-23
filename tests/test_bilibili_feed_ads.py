@@ -123,7 +123,7 @@ class BilibiliFeedAdsTests(unittest.TestCase):
         self.assertIn("bilibili-view-under-ad.js", qx)
         self.assertIn("viewunite", qx)
         # Must not attach broad B 站 hooks (comments / dynamic / full ADBlock).
-        self.assertNotIn("splash", module)
+        self.assertIn("splash", module)  # intentional: structured empty splash
         self.assertNotIn("dynamic", module.lower())
         self.assertNotIn("reply", module.lower())
         self.assertNotIn("MainList", module)
