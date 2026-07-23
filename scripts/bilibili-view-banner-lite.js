@@ -12,8 +12,12 @@ const SCAN_MARKERS = [
   "立即下载",
   "查看详情",
   "了解更多",
+  "bilibili.ad.v1.",
+  "AdsControlDto",
+  "SourceContentDto",
 ];
 
+// 硬特征：命中即视为广告子树
 const DROP_MARKERS = [
   "sycp/sanlian",
   "sycp/app_icon",
@@ -24,11 +28,21 @@ const DROP_MARKERS = [
   "adtrack.qianwen.com",
   "cm.bilibili.com/ldad",
   "unet.quark.cn/v3/ad",
+  // 冷启动 HAR 确认：部分横幅以 Any 包装的广告 DTO 下发，无 relatedvideo.cm
+  "bilibili.ad.v1.AdsControlDto",
+  "bilibili.ad.v1.SourceContentDto",
+  "type.googleapis.com/bilibili.ad",
+  // 播放页横幅「广告」角标颜色
+  "#9499A0FF",
+  "#757A81FF",
 ];
 
-// 常见 CTA：立即下载 / 查看详情 / 了解更多（证券类广告多用查看详情）
+// 常见 CTA：立即下载 / 查看详情 / 了解更多（证券类多用查看详情）
 const CTA_LABELS = ["立即下载", "查看详情", "了解更多", "立即打开", "去看看"];
 const LABEL_AD = "广告";
+const LABEL_PLAY = "播放";
+// 嵌套裁剪后可能残留的小卡片上限（整页内容远大于此）
+const RESIDUAL_AD_MAX_LEN = 25000;
 
 function utf8Encode(text) {
   if (typeof TextEncoder !== "undefined") {
@@ -82,6 +96,30 @@ function hasCta(data) {
   return false;
 }
 
+function isResidualAdCard(data) {
+  // 子字段被裁掉后，父卡片可能只剩标题+「广告·N播放」+ 封面，需按小卡片启发式丢掉
+  if (data.length > RESIDUAL_AD_MAX_LEN) {
+    return false;
+  }
+  if (!bytesIncludes(data, LABEL_AD)) {
+    return false;
+  }
+  if (
+    bytesIncludes(data, LABEL_PLAY) &&
+    (bytesIncludes(data, "vupload") ||
+      bytesIncludes(data, "bfs/archive") ||
+      bytesIncludes(data, "sycp/") ||
+      hasCta(data))
+  ) {
+    return true;
+  }
+  // 广告负反馈文案多在商业卡上
+  if (bytesIncludes(data, "sycp/mng") && bytesIncludes(data, "屏蔽广告")) {
+    return true;
+  }
+  return false;
+}
+
 function hasDropMarker(data) {
   for (const m of DROP_MARKERS) {
     if (bytesIncludes(data, m)) {
@@ -106,6 +144,9 @@ function hasDropMarker(data) {
     return true;
   }
   if (bytesIncludes(data, "apps.apple.com") && bytesIncludes(data, LABEL_AD)) {
+    return true;
+  }
+  if (isResidualAdCard(data)) {
     return true;
   }
   return false;

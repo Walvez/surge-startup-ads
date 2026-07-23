@@ -25,6 +25,9 @@ SCAN_MARKERS = [
     "立即下载".encode(),
     "查看详情".encode(),
     "了解更多".encode(),
+    b"bilibili.ad.v1.",
+    b"AdsControlDto",
+    b"SourceContentDto",
 ]
 CTA_LABELS = [
     "立即下载".encode(),
@@ -44,9 +47,15 @@ DROP_MARKERS = [
     b"adtrack.qianwen.com",
     b"cm.bilibili.com/ldad",
     b"unet.quark.cn/v3/ad",
+    b"bilibili.ad.v1.AdsControlDto",
+    b"bilibili.ad.v1.SourceContentDto",
+    b"type.googleapis.com/bilibili.ad",
+    b"#9499A0FF",
+    b"#757A81FF",
 ]
-CTA = "立即下载".encode()
 LABEL_AD = "广告".encode()
+LABEL_PLAY = "播放".encode()
+RESIDUAL_AD_MAX_LEN = 25000
 
 
 def has_scan_marker(data: bytes) -> bool:
@@ -55,6 +64,23 @@ def has_scan_marker(data: bytes) -> bool:
 
 def has_cta(data: bytes) -> bool:
     return any(c in data for c in CTA_LABELS)
+
+
+def is_residual_ad_card(data: bytes) -> bool:
+    if len(data) > RESIDUAL_AD_MAX_LEN:
+        return False
+    if LABEL_AD not in data:
+        return False
+    if LABEL_PLAY in data and (
+        b"vupload" in data
+        or b"bfs/archive" in data
+        or b"sycp/" in data
+        or has_cta(data)
+    ):
+        return True
+    if b"sycp/mng" in data and "屏蔽广告".encode() in data:
+        return True
+    return False
 
 
 def has_drop_marker(data: bytes) -> bool:
@@ -72,6 +98,8 @@ def has_drop_marker(data: bytes) -> bool:
     if b"sycp/face" in data and LABEL_AD in data:
         return True
     if b"apps.apple.com" in data and LABEL_AD in data:
+        return True
+    if is_residual_ad_card(data):
         return True
     return False
 
@@ -244,9 +272,41 @@ class BilibiliViewBannerLiteTests(unittest.TestCase):
             self.assertNotIn(b"relatedvideo.cm", cleaned)
             self.assertNotIn(b"sycp/sanlian", cleaned)
             self.assertNotIn(b"sycp/mgk", cleaned)
-            self.assertNotIn(CTA, cleaned)
+            self.assertNotIn(b"AdsControlDto", cleaned)
+            self.assertNotIn(b"SourceContentDto", cleaned)
+            self.assertNotIn("立即下载".encode(), cleaned)
             self.assertIn("简介".encode(), cleaned)
             self.assertLess(len(cleaned), len(msg))
+
+        self.assertGreaterEqual(matched, 1)
+
+    def test_cold_start_har_strips_quark_banner(self):
+        cold = Path("/Users/walve/Downloads/quantumult-x-2026-07-23-193127.har")
+        if not cold.is_file():
+            self.skipTest("cold-start HAR not present")
+
+        har = json.loads(cold.read_text(encoding="utf-8"))
+        matched = 0
+        for entry in har["log"]["entries"]:
+            url = entry["request"]["url"]
+            host = urlparse(url).netloc
+            path = urlparse(url).path
+            if host not in ("app.bilibili.com", "app.biliapi.net"):
+                continue
+            if not path.endswith("/bilibili.app.viewunite.v1.View/View"):
+                continue
+            raw = get_raw(entry["response"])
+            if not raw or len(raw) < 5000 or b"400 Bad Request" in raw:
+                continue
+            msg = decode_grpc_message(raw)
+            if "没有工作".encode() not in msg and "夸克AI".encode() not in msg:
+                continue
+            matched += 1
+            cleaned = clean_message(msg)
+            self.assertNotIn("没有工作".encode(), cleaned)
+            self.assertNotIn("夸克AI".encode(), cleaned)
+            self.assertNotIn(b"AdsControlDto", cleaned)
+            self.assertIn("简介".encode(), cleaned)
 
         self.assertGreaterEqual(matched, 1)
 
