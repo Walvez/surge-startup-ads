@@ -1,9 +1,12 @@
 #!name=浦大喜奔开屏补充
-#!desc=拦截经实机抓包确认、但上游模块尚未覆盖的浦大喜奔开屏素材
+#!desc=拦截浦大喜奔 image/images CDN 上的开屏素材（JPG 全量 + 历史指纹）；素材轮换后需清缓存
 #!author=Walvez
 
 [Map Local]
-^https?:\/\/image\.spdbccc\.com\.cn\/group\d\/M00\/[A-Z0-9]{2}\/[A-Z0-9]{2}\/[^?]*E798\.JPG(?:\?.*)?$ data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# 开屏素材 historically 为 JPG（如 E798.JPG）；首页小图标多为 PNG，故只拦 JPEG
+^https?:\/\/images?\.spdbccc\.com\.cn\/group\d\/M00\/[A-Z0-9]{2}\/[A-Z0-9]{2}\/[^?]+\.(?:[jJ][pP][eE]?[gG])(?:\?.*)?$ data-type=text data="{}" status-code=200 header="Content-Type:application/json"
+# 历史已确认 + 社区常见开屏文件名指纹（含 PNG 开屏）
+^https?:\/\/images?\.spdbccc\.com\.cn\/group\d\/M00\/[A-Z0-9]{2}\/[A-Z0-9]{2}\/.+(?:E798|4038|0571|M511|V-008|g549|b0628|fg817|5w501|Jo341|Z4583|oo845|i4905|MY245|YU472|Y401|w428|s000)(?:\?.*)?$ data-type=text data="{}" status-code=200 header="Content-Type:application/json"
 
 [MITM]
-hostname = %APPEND% image.spdbccc.com.cn
+hostname = %APPEND% image.spdbccc.com.cn, images.spdbccc.com.cn

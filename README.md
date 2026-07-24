@@ -24,7 +24,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 - 掌上生活开屏预缓存与首页浮窗拦截；
 - 京东健康启动开屏资源拦截；
 - 广发基金 iOS 开屏图片拦截；
-- 浦大喜奔当前开屏素材拦截；
+- 浦大喜奔 image/images CDN 开屏素材拦截（JPG 与已知指纹）；
 - 医考帮开屏、启动弹窗、首页浮窗及横幅广告清理；
 - 摩根资产管理原生启动开屏广告清理。
 
