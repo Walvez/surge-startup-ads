@@ -844,14 +844,14 @@ https?:\/\/m\.sd\.10086\.cn\/zapi\/app_common\/homeWelcome\/welcome.do - reject-
 ^https:\/\/mbasecc\.bcs\.cmbchina\.com\/Edge\/api\/mlife\.clientface\.clientservice\.api\.advertiseService\/preCacheAdvertiseSec(?:\?|$) - reject-200
 ^https:\/\/mlife\.cmbchina\.com\/ClientFaceService\/api\/mlife\.clientface\.clientservice\.api\.advertiseService\/preCacheAdvertiseSec(?:\?|$) - reject-200
 ^https:\/\/intellicc\.bcs\.cmbchina\.com\/Edge\/api\/mlife\.intelli\.adrender\.api\.AdWork\/getAdsBySlotId(?:\?|$) - reject-200
-# ===== 京东健康开屏 =====
-^https:\/\/api\.m\.jd\.com\/api\?(?:[^#]*&)?functionId=jdh_queryStartupResources(?:&|$) - reject-dict
 ^http:\/\/[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+){1,4}(:\d+)?\/.*?\/v\d\/(version|notice\?|top_notice\?|advert\?position=[^2]+) - reject-200
 ^https:\/\/cdngfwx\.gffunds\.com\.cn\/trade-pic\/app\/pic\/[^?]*_(?:kp)?ios\.(?:jpe?g|png|webp)(?:\?.*)?$ - reject
 
 [Map Local]
 # ===== dongqiudi =====
 ^https?:\/\/ap\.(dongqiudi|dongdianqiu)\.com\/plat\/v4 data-type=text data="{\"sdk\":[],\"addata\":[]}" status-code=200 header="Content-Type:application/json"
+# ===== 京东健康开屏 =====
+^https?:\/\/api\.m\.jd\.com\/api\?.*functionId=jdh_queryStartupResources data-type=text data="{}" status-code=200 header="Content-Type:application/json"
 ^https?:\/\/image\.spdbccc\.com\.cn\/group\d\/M00\/[A-Z0-9]{2}\/[A-Z0-9]{2}\/[^?]*E798\.JPG(?:\?.*)?$ data-type=text data="{}" status-code=200 header="Content-Type:application/json"
 
 [Body Rewrite]

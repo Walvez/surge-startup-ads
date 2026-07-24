@@ -38,12 +38,15 @@
     },
     {
       "name": "京东健康开屏",
-      "section": "URL Rewrite",
+      "section": "Map Local",
+      "remove_contains": [
+        "jdh_queryStartupResources"
+      ],
       "hostnames": [
         "api.m.jd.com"
       ],
       "lines": [
-        "^https:\\/\\/api\\.m\\.jd\\.com\\/api\\?(?:[^#]*&)?functionId=jdh_queryStartupResources(?:&|$) - reject-dict"
+        "^https?:\\/\\/api\\.m\\.jd\\.com\\/api\\?.*functionId=jdh_queryStartupResources data-type=text data=\"{}\" status-code=200 header=\"Content-Type:application/json\""
       ]
     }
   ],
