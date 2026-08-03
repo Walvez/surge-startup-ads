@@ -22,6 +22,12 @@ Keep in the main output:
 - the complete upstream MITM hostname list, deduplicated;
 - repository-owned overrides and modules, including `modules/FakeiOSAds.sgmodule`.
 
+Current repository-owned surfaces (2026-08-03):
+
+- `local_overrides` in `config/build.json`: 百度网盘、掌上生活、京东健康；
+- `local_modules` in this checkout: FakeiOSAds、广发基金、浦大喜奔补充、医考帮、摩根资产管理、哔哩哔哩开屏/推荐流补充；
+- standalone Quantumult X rewrite resource: `quantumultx/StartUpAds_Local.conf` (parity with the local patches above; not part of the Surge generator).
+
 Do not merge third-party native Surge modules such as BiliUniverse ADBlock, Maasea YouTube Enhance, GoofishAds, CainiaoAds, SmzdmAds, Amap, XiaoHongShuAds, TieBaAds, Zhihu, WeChat mini-program modules, or China Telecom. Keep those as optional independent recommendations in README.
 
 ## Failure policy
@@ -42,6 +48,8 @@ Primary:
 ```text
 https://ddgksf2013.top/rewrite/StartUpAds.conf
 ```
+
+If the primary URL returns HTML or a site shell instead of config text, fall back to the mirror below before comparing markers or regenerating.
 
 Fallback mirror:
 

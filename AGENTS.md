@@ -40,6 +40,7 @@ Treat current repository files as authoritative.
 
 - Do not maintain an App allowlist.
 - Fetch the current upstream source and confirm it is config text, not HTML.
+- If the primary ddgksf2013 URL returns a site shell, switch to the Romeo mirror before comparing markers or regenerating.
 - Convert every `# > marker` block and deduplicate the complete upstream hostname list.
 - Unknown upstream syntax must fail the build; never silently skip it.
 - Add an offline fixture and unit test for every newly supported syntax.
@@ -51,6 +52,7 @@ Treat current repository files as authoritative.
 - Use `local_modules` for repository-owned Surge modules.
 - Read local modules from this checkout. Do not fetch this repository's own `main` branch as an external module.
 - Check `quantumultx/StartUpAds_Local.conf` when a local rule also applies to Quantumult X.
+- Keep Surge main-module local coverage and the QX rewrite resource in parity when the same App is fixed in both places.
 
 ## Optional native Surge modules
 

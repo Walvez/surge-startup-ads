@@ -26,6 +26,8 @@ python3 scripts/convert.py \
 
 No App allowlist is maintained. New upstream markers are converted automatically.
 
+Primary source may temporarily return HTML. Always confirm the body is real `StartUpAds.conf` text (`# >` markers and a `hostname =` line) before comparing or regenerating. Prefer the Romeo mirror when the primary site shell is returned.
+
 When a build fails after an upstream update:
 
 1. confirm the downloaded response is real config text, not HTML;
@@ -39,6 +41,8 @@ When a build fails after an upstream update:
 Use `local_overrides` in `config/build.json` when an upstream rule must be removed or replaced. Use `local_modules` for repository-owned Surge modules. Keep local modules in the checkout; never fetch this repository's own `main` branch through `external_modules`.
 
 When a local rule is applicable to Quantumult X, also inspect `quantumultx/StartUpAds_Local.conf` for parity. That file remains a standalone QX rewrite resource and is not part of the Surge generator.
+
+After any repository-owned local fix, recheck both `config/build.json` / `modules/` and the QX file so Surge main-module coverage and QX supplements stay aligned.
 
 ## Diagnose a module
 

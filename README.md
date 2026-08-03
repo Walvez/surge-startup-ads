@@ -23,6 +23,7 @@ https://raw.githubusercontent.com/Walvez/surge-startup-ads/main/dist/StartUpAds_
 - 百度网盘 `activityentry` 与 `splashMode` 本地覆盖；
 - 掌上生活开屏预缓存与首页浮窗拦截；
 - 京东健康启动开屏资源拦截；
+- 哔哩哔哩开屏结构化空返回与推荐流创作推广/会员购/App Store 大图清理（不含播放页下方 banner）；
 - 广发基金 iOS 开屏图片拦截；
 - 浦大喜奔 image/images CDN 开屏与浮窗素材拦截（JPG 与已知指纹；MITM 仅图片域名）；
 - 医考帮开屏、启动弹窗、首页浮窗及横幅广告清理；

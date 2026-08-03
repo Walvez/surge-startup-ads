@@ -16,6 +16,8 @@
 - 必须保留 Surge 语法细节，尤其是 `argument=` 引号。
 - README 不得把长 URL 放进宽表格；使用 `<details>` 和独立 `text` 代码块。
 - 必须区分原作者、镜像仓库和本仓库的转换角色。
+- 上游主站可能返回 HTML；比较或重建前必须确认拿到的是真实配置文本，必要时改用 Romeo 镜像。
+- 本地补丁若同时影响 Quantumult X，需同步检查 `quantumultx/StartUpAds_Local.conf`。
 
 每次任务：
 1. 先检查现状和上游；

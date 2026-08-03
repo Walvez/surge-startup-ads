@@ -44,6 +44,8 @@ Normal flow:
 6. authorize push;
 7. run GitHub Actions only when config/converter/module/output changed.
 
+After architecture or repository-owned local-rule changes, also recheck `quantumultx/StartUpAds_Local.conf` parity and the public Raw subscription if the user intends to publish.
+
 Keep synchronized after architecture changes:
 - `AGENTS.md`
 - `docs/PROJECT_CONTEXT.md`
