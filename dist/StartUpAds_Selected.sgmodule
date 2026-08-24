@@ -6,9 +6,9 @@
 #!date=2026-06-02
 
 # Upstream: ddgksf2013/Moyu StartUpAds.conf
-# Upstream SHA-256: 3bdb0684dbde9ab1f24c8655a1675a37c720b86bf2b8c3ca65dba373d096c649
-# Upstream blocks: 397
-# Upstream rules converted: 506
+# Upstream SHA-256: 54aff9f08d2882e34f783155948203a5c68e75fe8e097e345ba2e937e5fea043
+# Upstream blocks: 396
+# Upstream rules converted: 505
 # Upstream MITM hostnames: 438
 # Local additions: 百度网盘本地覆盖: applied; 掌上生活开屏与首页浮窗: applied; 京东健康开屏: applied; 影视去广告: merged; 广发基金去开屏: merged; 浦大喜奔开屏补充: merged; 医考帮去开屏: merged; 摩根资产管理去开屏: merged; 哔哩哔哩推荐流广告补充: merged
 
@@ -505,8 +505,6 @@ https://homefront.qunar.com/front/splash/ad - reject-200
 ^https?:\/\/.*dcloud\.net\.cn\/(app\/acs|uad) - reject-200
 # ===== richanzhilian =====
 ^https?:\/\/.*dongfeng-nissan\.com\.cn\/mb-gw\/vmsp-discover\/rest\/business-service\/v\d\/adver - reject-200
-# ===== ruixinkafei =====
-^https?:\/\/capi\.lkcoffee\.com\/resource\/m\/sys\/(homePage\/contactor\/modules|app\/adposNew) - reject-200
 # ===== ruiboshi =====
 ^https?:\/\/sdk\.tianmu\.mobi\/ad - reject-200
 # ===== ruibai =====
